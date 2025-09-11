@@ -1,136 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Feedback - Lipimo</title>
-  <style>
-    body {
-      font-family: Garamond, serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #ffe6f3, #e6ccff);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 30px;
-    }
+<div class="pastelForm">
+  <h2>✨ Share Your Feedback ✨</h2>
+  <form id="feedbackForm">
+    <label>1. Did you like this Lipimo website?</label><br>
+    <input type="text" name="q1" placeholder="Yes / No / Your thoughts" required><br><br>
 
-    h1 {
-      font-size: 32px;
-      color: #333;
-      margin-bottom: 20px;
-      text-align: center;
-    }
+    <label>2. What do you think can be improved?</label><br>
+    <input type="text" name="q2" placeholder="Your suggestions" required><br><br>
 
-    .feedback-box {
-      background: #fff;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-    }
+    <label>3. Would you recommend this to a friend?</label><br>
+    <input type="text" name="q3" placeholder="Yes / No / Maybe" required><br><br>
 
-    input {
-      padding: 10px;
-      width: 80%;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
+    <button type="submit">Submit</button>
+  </form>
+  <p id="thankYouMsg" style="display:none;">Thanks for your feedback! 💖</p>
 
-    button {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #ffd6eb, #e6ccff);
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
+  <h3 style="margin-top: 30px;">💬 Live Responses:</h3>
+  <div id="responsesList"></div>
+</div>
 
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-    }
+<style>
+  .pastelForm {
+    max-width: 500px;
+    margin: 40px auto;
+    background: linear-gradient(135deg, #ffe6f3, #e6ccff);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    font-family: Garamond, serif;
+    text-align: center;
+  }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-      text-align: left;
-      max-height: 300px;
-      overflow-y: auto;
-    }
+  .pastelForm h2, .pastelForm h3 {
+    margin-bottom: 20px;
+    color: #444;
+  }
 
-    li {
-      background: #f9f3ff;
-      margin-bottom: 8px;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 15px;
-    }
-  </style>
-</head>
-<body>
-  <h1>✨ Live Feedback ✨</h1>
-  <div class="feedback-box">
-    <input type="text" id="feedbackInput" placeholder="Type your feedback here">
-    <br>
-    <button onclick="sendFeedback()">Send</button>
-    <ul id="feedbackList"></ul>
-  </div>
+  .pastelForm label {
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin-bottom: 6px;
+    text-align: left;
+  }
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+  .pastelForm input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
+  }
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDEQ2za-fE8GOStmjnK0dKiGS4F2RJhXd8",
-      authDomain: "lipimo-murli.firebaseapp.com",
-      projectId: "lipimo-murli",
-      storageBucket: "lipimo-murli.firebasestorage.app",
-      messagingSenderId: "668702279710",
-      appId: "1:668702279710:web:de3c088b1809e6cdc8c60f",
-      measurementId: "G-WQ4ZTEVG2G"
+  .pastelForm button {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-family: Garamond, serif;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .pastelForm button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+  }
+
+  #responsesList {
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  .responseItem {
+    background: linear-gradient(135deg, #fff1f7, #f3e8ff);
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+</style>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDEQ2za-fE8GOStmjnK0dKiGS4F2RJhXd8",
+    authDomain: "lipimo-murli.firebaseapp.com",
+    projectId: "lipimo-murli",
+    storageBucket: "lipimo-murli.firebasestorage.app",
+    messagingSenderId: "668702279710",
+    appId: "1:668702279710:web:de3c088b1809e6cdc8c60f",
+    measurementId: "G-WQ4ZTEVG2G"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById("feedbackForm");
+  const thankYouMsg = document.getElementById("thankYouMsg");
+  const responsesList = document.getElementById("responsesList");
+
+  // Submit feedback
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = {
+      q1: form.q1.value,
+      q2: form.q2.value,
+      q3: form.q3.value,
+      timestamp: serverTimestamp()
     };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Add feedback
-    async function sendFeedback() {
-      const input = document.getElementById("feedbackInput");
-      const text = input.value.trim();
-      if (!text) return;
-
-      await addDoc(collection(db, "feedback"), {
-        message: text,
-        timestamp: Date.now()
-      });
-
-      input.value = "";
+    try {
+      await addDoc(collection(db, "feedbackForm"), data);
+      form.reset();
+      thankYouMsg.style.display = "block";
+      setTimeout(() => { thankYouMsg.style.display = "none"; }, 3000);
+    } catch (err) {
+      alert("Error sending feedback: " + err);
     }
+  });
 
-    // Show live feedback
-    const q = query(collection(db, "feedback"), orderBy("timestamp", "desc"));
-    onSnapshot(q, (snapshot) => {
-      const feedbackList = document.getElementById("feedbackList");
-      feedbackList.innerHTML = "";
-      snapshot.forEach((doc) => {
-        const li = document.createElement("li");
-        li.textContent = doc.data().message;
-        feedbackList.appendChild(li);
-      });
+  // Real-time listener
+  const q = query(collection(db, "feedbackForm"), orderBy("timestamp", "desc"));
+  onSnapshot(q, (snapshot) => {
+    responsesList.innerHTML = "";
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const div = document.createElement("div");
+      div.classList.add("responseItem");
+      div.innerHTML = `
+        <strong>Liked:</strong> ${data.q1}<br>
+        <strong>Improvement:</strong> ${data.q2}<br>
+        <strong>Recommend:</strong> ${data.q3}
+      `;
+      responsesList.appendChild(div);
     });
-
-    // Make function global
-    window.sendFeedback = sendFeedback;
-  </script>
-</body>
-</html>
+  });
+</script>
