@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Home Page of Lipimo</title>
-
+  <title>i</title>
+cosmosta chipion
   <style>
 /* Mobile responsiveness */
 @media (max-width: 600px) {
@@ -562,100 +562,144 @@
   });
 })();
 </script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Magical Live Reviews</title>
+<div class="pastelForm">
+  <h2>✨ Share Your Feedback ✨</h2>
+  <form id="feedbackForm">
+    <label>1. Did you like this Lipimo website?</label><br>
+    <input type="text" name="q1" placeholder="Yes / No / Your thoughts" required><br><br>
+
+    <label>2. What do you think can be improved?</label><br>
+    <input type="text" name="q2" placeholder="Your suggestions" required><br><br>
+
+    <label>3. Would you recommend this to a friend?</label><br>
+    <input type="text" name="q3" placeholder="Yes / No / Maybe" required><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+  <p id="thankYouMsg" style="display:none;">Thanks for your feedback! 💖</p>
+</div>
+
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #fff0f8;
-    text-align: center;
-    padding: 50px;
-  }
-
-  /* Review Button */
-  #reviewBtn {
-    padding: 20px 50px;
-    background: linear-gradient(135deg, #ffc1e3, #d9b3ff);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 22px;
-    font-weight: 600;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  #reviewBtn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  }
-
-  /* Popup Form */
-  #popupForm {
-    display: none;
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #ffe6f0, #e6e0ff);
-    padding: 30px;
-    border-radius: 25px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    z-index: 1000;
-    width: 90%;
-    max-width: 400px;
-  }
-
-  #popupForm input, #popupForm textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-  }
-
-  #popupForm button {
-    padding: 12px 25px;
-    background: linear-gradient(135deg, #ffc1e3, #d9b3ff);
-    color: white;
-    border: none;
+  .pastelForm {
+    max-width: 500px;
+    margin: 40px auto;
+    background: linear-gradient(135deg, #ffe6f3, #e6ccff);
+    padding: 25px;
     border-radius: 20px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 500;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    font-family: Garamond, serif;
+    text-align: center;
   }
 
-  /* Reviews Section */
-  #reviewsSection {
-    width: 90%;
-    max-width: 800px;
-    margin: 60px auto 0 auto;
-    padding: 20px;
-    border-radius: 25px;
-    background: linear-gradient(135deg, #ffe6f0, #e6e0ff);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  .pastelForm h2 {
+    margin-bottom: 20px;
+    color: #444;
+  }
+
+  .pastelForm label {
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin-bottom: 6px;
     text-align: left;
   }
 
-  .review {
-    background: white;
-    padding: 15px 20px;
-    margin: 10px 0;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  .pastelForm input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+
+  .pastelForm button {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-family: Garamond, serif;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .pastelForm button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
   }
 </style>
-</head>
-<body>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDEQ2za-fE8GOStmjnK0dKiGS4F2RJhXd8",
+    authDomain: "lipimo-murli.firebaseapp.com",
+    projectId: "lipimo-murli",
+    storageBucket: "lipimo-murli.firebasestorage.app",
+    messagingSenderId: "668702279710",
+    appId: "1:668702279710:web:de3c088b1809e6cdc8c60f",
+    measurementId: "G-WQ4ZTEVG2G"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById("feedbackForm");
+  const thankYouMsg = document.getElementById("thankYouMsg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = {
+      q1: form.q1.value,
+      q2: form.q2.value,
+      q3: form.q3.value,
+      timestamp: serverTimestamp()
+    };
+    try {
+      await addDoc(collection(db, "feedbackForm"), data);
+      form.reset();
+      thankYouMsg.style.display = "block";
+      setTimeout(() => { thankYouMsg.style.display = "none"; }, 3000);
+    } catch (err) {
+      alert("Error sending feedback: " + err);
+    }
+  });
+</script>
+<!-- Floating Feedback Button -->
+<button id="feedbackBtn" 
+  style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 16px 28px;
+    font-size: 18px;
+    font-family: Garamond, serif;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    z-index: 9999;
+    transition: transform 0.2s, box-shadow 0.2s;
+  "
+  onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 22px rgba(0,0,0,0.35)';"
+  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.25)';"
+>
+  Share Your Feedback
+</button>
+
+<script>
+  document.getElementById("feedbackBtn").addEventListener("click", function() {
+    window.location.href = "feedback.html";
+  });
+</script>
 
 </body>
 </html>
-
-</body>
-</html>
-
