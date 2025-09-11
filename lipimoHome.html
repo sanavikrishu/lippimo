@@ -672,102 +672,38 @@
     }
   });
 </script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Feedback - Lipimo</title>
-<style>
-/* Paste your pastelForm styles here exactly as in your main page */
-.pastelForm {
-  max-width: 500px;
-  margin: 60px auto;
-  background: linear-gradient(135deg, #ffe6f3, #e6ccff);
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-  font-family: Garamond, serif;
-  text-align: center;
-}
-.pastelForm h2 { margin-bottom: 20px; color: #444; }
-.pastelForm label { font-size: 16px; color: #333; display: block; margin-bottom: 6px; text-align: left; }
-.pastelForm input { width: 90%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 12px; font-size: 16px; }
-.pastelForm button {
-  padding: 12px 24px;
-  font-size: 18px;
-  font-family: Garamond, serif;
-  font-weight: bold;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.pastelForm button:hover { transform: scale(1.05); box-shadow: 0 8px 18px rgba(0,0,0,0.25); }
-</style>
-</head>
-<body>
+<!-- Floating Feedback Button -->
+<button id="feedbackBtn" 
+  style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 16px 28px;
+    font-size: 18px;
+    font-family: Garamond, serif;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    z-index: 9999;
+    transition: transform 0.2s, box-shadow 0.2s;
+  "
+  onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 22px rgba(0,0,0,0.35)';"
+  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.25)';"
+>
+  Share Your Feedback
+</button>
 
-<div class="pastelForm">
-  <h2>✨ Share Your Feedback ✨</h2>
-  <form id="feedbackForm">
-    <label>1. Did you like this Lipimo website?</label><br>
-    <input type="text" name="q1" placeholder="Yes / No / Your thoughts" required><br><br>
-
-    <label>2. What do you think can be improved?</label><br>
-    <input type="text" name="q2" placeholder="Your suggestions" required><br><br>
-
-    <label>3. Would you recommend this to a friend?</label><br>
-    <input type="text" name="q3" placeholder="Yes / No / Maybe" required><br><br>
-
-    <button type="submit">Submit</button>
-  </form>
-  <p id="thankYouMsg" style="display:none;">Thanks for your feedback! 💖</p>
-</div>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDEQ2za-fE8GOStmjnK0dKiGS4F2RJhXd8",
-    authDomain: "lipimo-murli.firebaseapp.com",
-    projectId: "lipimo-murli",
-    storageBucket: "lipimo-murli.firebasestorage.app",
-    messagingSenderId: "668702279710",
-    appId: "1:668702279710:web:de3c088b1809e6cdc8c60f",
-    measurementId: "G-WQ4ZTEVG2G"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const form = document.getElementById("feedbackForm");
-  const thankYouMsg = document.getElementById("thankYouMsg");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = {
-      q1: form.q1.value,
-      q2: form.q2.value,
-      q3: form.q3.value,
-      timestamp: serverTimestamp()
-    };
-    try {
-      await addDoc(collection(db, "feedbackForm"), data);
-      form.reset();
-      thankYouMsg.style.display = "block";
-      setTimeout(() => { thankYouMsg.style.display = "none"; }, 3000);
-    } catch (err) {
-      alert("Error sending feedback: " + err);
-    }
+<script>
+  document.getElementById("feedbackBtn").addEventListener("click", function() {
+    window.location.href = "feedback.html";
   });
 </script>
 
 </body>
 </html>
 
-</body>
-</html>
 
