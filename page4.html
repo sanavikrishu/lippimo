@@ -1,0 +1,165 @@
+<<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Page 4 - Lipimo Challenges</title>
+  <style>
+    body {
+      font-family: Garamond, serif;
+      background-color: #fddde6;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      justify-content: flex-start;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 40px;
+      font-size: 32px;
+    }
+
+    /* Shared button style */
+    .nav-button {
+      padding: 16px 40px;
+      font-size: 20px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #ffd6e8, #e0bbff);
+      color: #5a3d5c;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+      font-weight: bold;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    /* Container for grouped buttons */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Next Page */
+    .next-page-container {
+      margin-top: 40px;
+    }
+
+    .next-page {
+      padding: 16px 40px;
+      font-size: 20px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #e0bbff, #ffd6e8);
+      color: #5a3d5c;
+      font-weight: bold;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .next-page:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    /* Go Back Home */
+    .go-back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      color: #444;
+      background: linear-gradient(135deg, #ffd6e8, #d6e8ff);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: Garamond, serif;
+    }
+
+    .go-back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to the Challenges Tracker Page!</h1>
+
+  <!-- Centered button group -->
+  <div class="button-group">
+    <button class="nav-button" onclick="window.location.href='page3.html'">Go Back</button>
+    <button class="nav-button" onclick="window.location.href='challenges tracker v2.html'">Challenges Tracker</button>
+    <button class="nav-button" onclick="window.location.href='path.html'">✨ Path ✨</button>
+    <button class="nav-button" onclick="window.location.href='improvements.html'">🌟 Improvements 🌟</button>
+  </div>
+
+  <!-- Next Page -->
+  <div class="next-page-container">
+    <button class="next-page" onclick="window.location.href='page7.html'">
+      Next Page ➡
+    </button>
+  </div>
+
+  <!-- Go Back Home -->
+  <button class="go-back-btn" onclick="window.location.href='lipimoHome.html'">
+    ← Back to Home
+  </button>
+<!DOCTYPE html>  <style>
+    body {
+      background-color: #f4f4f4; /* match your site background */
+    }
+    #secret-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 10px;
+      height: 10px;
+      background-color: #f4f4f4; /* camouflaged */
+      border: 1px solid #ccc; /* subtle border so you can find it */
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #secret-btn.clicked {
+      width: 120px;
+      height: 60px;
+      background-color: #ff69b4; /* becomes visible */
+      border-color: #ff69b4;
+    }
+  </style>
+</head>
+<body>
+  <button id="secret-btn"></button>
+
+  <script>
+    const btn = document.getElementById("secret-btn");
+    btn.addEventListener("click", () => {
+      btn.classList.add("clicked");
+      setTimeout(() => {
+        window.location.href = "secret.html";
+      }, 500); // wait for expand animation
+    });
+  </script>
+</body>
+</html>
+
+
+</body>
+</html>
+

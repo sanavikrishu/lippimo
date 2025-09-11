@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Challenges Path</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #fdf6f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    svg {
+      width: 90%;
+      height: 900px; /* tall path */
+    }
+
+    .marker {
+      transition: transform 1s ease-in-out;
+    }
+
+    .arrow {
+      font-size: 16px;
+      fill: #333;
+    }
+
+    .congrats {
+      display: none;
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff3399;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Your Challenges Path</h2>
+
+  <svg viewBox="0 0 400 900">
+    <!-- Very smooth vertical wavy path -->
+    <path id="challengePath"
+          d="M 200 20
+             C 50 100, 350 200, 200 300
+             C 50 400, 350 500, 200 600
+             C 50 700, 350 800, 200 880"
+          stroke="#ff66b2" stroke-width="6" fill="none" />
+
+    <!-- Marker (circle + heart image) -->
+    <g id="marker" class="marker">
+      <circle r="35" fill="white" stroke="#ff3399" stroke-width="3" />
+      <image href="heart.png" x="-25" y="-25" width="50" height="50"/>
+    </g>
+
+    <!-- Arrow + label -->
+    <text id="label" class="arrow" x="250" y="40">⬅ This is where you are right now</text>
+  </svg>
+
+  <div class="congrats" id="congratsMsg">🎉 Congratulations! You completed 30 days! 🎉</div>
+
+  <script>
+    let daysCompleted = 0; // link this to your challenges tracker
+
+    function updateMarker() {
+      const path = document.getElementById("challengePath");
+      const marker = document.getElementById("marker");
+      const label = document.getElementById("label");
+      const congrats = document.getElementById("congratsMsg");
+
+      const pathLength = path.getTotalLength();
+
+      // progress: 0 to 1
+      let progress = Math.min(daysCompleted / 30, 1);
+      const pointAtLength = path.getPointAtLength(progress * pathLength);
+
+      // move marker
+      marker.setAttribute("transform", `translate(${pointAtLength.x}, ${pointAtLength.y})`);
+
+      // move label near marker
+      label.setAttribute("x", pointAtLength.x + 60);
+      label.setAttribute("y", pointAtLength.y);
+
+      // show congrats if 30 days
+      if (daysCompleted >= 30) {
+        congrats.style.display = "block";
+      } else {
+        congrats.style.display = "none";
+      }
+    }
+
+    // Example: simulate tracker progress
+    function completeDay() {
+      daysCompleted++;
+      if (daysCompleted % 5 === 0) {
+        updateMarker();
+      }
+    }
+
+    // For demo: press any key to simulate completing a day
+    document.addEventListener("keydown", () => {
+      completeDay();
+    });
+
+    // place marker at start initially
+    updateMarker();
+  </script>
+<!-- Go Back button -->
+<button onclick="window.location.href='page4.html'" 
+        style="background:#ff66b2; color:white; border:none; padding:10px 20px; 
+               font-size:16px; border-radius:12px; cursor:pointer; margin-bottom:20px;">
+  ⬅ Go Back
+</button>
+
+
+</body>
+</html>

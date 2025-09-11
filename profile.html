@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<style>
+  /* General styles */
+  body {
+    font-family: 'Garamond', serif;
+    background: linear-gradient(135deg, #fdd6f2, #d6b6fc);
+    margin: 0;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    margin-top: 30px;
+    color: #6b3ca7;
+    font-size: 2em;
+  }
+
+  /* Profile photo circle */
+  .profile-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 20px auto;
+    overflow: hidden;
+    border: 4px solid #a890fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .profile-circle img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Upload button */
+  input[type="file"] {
+    display: none;
+  }
+
+  .upload-btn {
+    background-color: #fff;
+    color: #6b3ca7;
+    border: 2px solid #6b3ca7;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: 0.3s;
+  }
+
+  .upload-btn:hover {
+    background-color: #6b3ca7;
+    color: white;
+  }
+
+  /* Input fields */
+  .input-fields {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .input-fields input {
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  #doneBtn {
+    background-color: #fff;
+    color: #6b3ca7;
+    border: 2px solid #6b3ca7;
+    border-radius: 15px;
+    padding: 10px 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #doneBtn:hover {
+    background-color: #6b3ca7;
+    color: white;
+  }
+
+  /* Name display with menu */
+  .name-container {
+    position: relative;
+    margin-top: 15px;
+    display: inline-block;
+  }
+
+  #nameDisplay {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #4b1d80;
+  }
+
+  .dots {
+    position: absolute;
+    top: 0;
+    right: -25px;
+    cursor: pointer;
+    font-size: 1.3em;
+  }
+
+  .menu {
+    display: none;
+    position: absolute;
+    top: 25px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 10;
+  }
+
+  .menu button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+  }
+
+  .menu button:hover {
+    background-color: #f0e0ff;
+  }
+
+  /* Bottom tabs */
+  .bottom-tabs {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: #a890fc;
+    padding: 12px 0;
+  }
+
+  .tab {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .tab:hover {
+    background-color: #8c6edc;
+  }
+
+</style>
+</head>
+<body>
+
+<h1>Your Profile</h1>
+
+<div class="profile-circle" id="profileCircle">
+  <!-- Profile image will appear here -->
+</div>
+
+<label for="uploadInput" class="upload-btn">Upload Your Photo</label>
+<input type="file" id="uploadInput" accept="image/*">
+
+<div class="input-fields">
+  <input type="text" id="firstName" placeholder="First Name">
+  <input type="text" id="lastName" placeholder="Last Name">
+</div>
+<button id="doneBtn">Done</button>
+
+<div class="name-container" id="nameContainer" style="display:none;">
+  <span id="nameDisplay"></span>
+  <span class="dots" onclick="toggleMenu(event)">⋮</span>
+  <div class="menu" id="menuOptions">
+    <button onclick="editName()">Edit / Rename</button>
+    <button onclick="deleteName()">Delete</button>
+  </div>
+</div>
+
+<div class="bottom-tabs">
+  <a href="krishna.html" class="tab">Krishna</a>
+  <a href="profile.html" class="tab">Profile</a>
+  <a href="achievements.html" class="tab">Achievements</a>
+</div>
+
+<script>
+const profileCircle = document.getElementById("profileCircle");
+const uploadInput = document.getElementById("uploadInput");
+const firstNameInput = document.getElementById("firstName");
+const lastNameInput = document.getElementById("lastName");
+const nameDisplay = document.getElementById("nameDisplay");
+const nameContainer = document.getElementById("nameContainer");
+
+// Load saved profile from localStorage
+window.onload = () => {
+  const savedPhoto = localStorage.getItem("profilePhoto");
+  const savedName = localStorage.getItem("profileName");
+
+  if (savedPhoto) showImage(savedPhoto);
+  if (savedName) {
+    nameDisplay.textContent = savedName;
+    nameContainer.style.display = "inline-block";
+  }
+};
+
+// Upload photo and save to localStorage
+uploadInput.onchange = function () {
+  const file = uploadInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const dataURL = e.target.result;
+      showImage(dataURL);
+      localStorage.setItem("profilePhoto", dataURL);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+// Save name
+document.getElementById("doneBtn").onclick = function () {
+  const first = firstNameInput.value.trim();
+  const last = lastNameInput.value.trim();
+  if (!first && !last) return;
+  const fullName = `${first} ${last}`.trim();
+  nameDisplay.textContent = fullName;
+  nameContainer.style.display = "inline-block";
+  localStorage.setItem("profileName", fullName);
+};
+
+// Display image
+function showImage(dataURL) {
+  profileCircle.innerHTML = `<img src="${dataURL}" alt="Profile Photo">`;
+}
+
+// Menu functions
+function toggleMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById("menuOptions");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+window.onclick = function () {
+  document.getElementById("menuOptions").style.display = "none";
+};
+
+function editName() {
+  const newName = prompt("Edit your name:", nameDisplay.textContent);
+  if (newName && newName.trim() !== "") {
+    nameDisplay.textContent = newName.trim();
+    localStorage.setItem("profileName", newName.trim());
+  }
+}
+
+function deleteName() {
+  if (confirm("Delete your name and photo?")) {
+    localStorage.removeItem("profileName");
+    localStorage.removeItem("profilePhoto");
+    nameDisplay.textContent = "";
+    nameContainer.style.display = "none";
+    profileCircle.innerHTML = "";
+    firstNameInput.value = "";
+    lastNameInput.value = "";
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Consistency Tips</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Garamond&display=swap');
+
+  body {
+    font-family: 'Garamond', serif;
+    margin: 0;
+    padding: 30px;
+    background: linear-gradient(135deg, #d0e6ff, #a8c4ff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 48px;
+    background: linear-gradient(135deg, #ff85c1, #b496ff, #85c1ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .box {
+    background: #fff;
+    border: 3px solid black;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: left;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    margin-bottom: 30px;
+  }
+
+  .box h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .box p {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  button {
+    padding: 14px 25px;
+    background: linear-gradient(135deg, #85c1ff, #a8c4ff, #d0e6ff);
+    color: black;
+    font-family: 'Garamond', serif;
+    font-size: 20px;
+    border: 2px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    margin-top: 20px;
+  }
+
+  button:hover {
+    background: linear-gradient(135deg, #a8c4ff, #d0e6ff, #f0f7ff);
+    transform: scale(1.05);
+  }
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .scrolling-tips, .reflection {
+    padding: 20px;
+  }
+
+  .scrolling-tips h2, .reflection h2 {
+    font-size: 22px;
+  }
+
+  .scrolling-tips ul li, .reflection label {
+    font-size: 16px;
+  }
+
+  .toggle-btn, .reset-btn, #goBackBtn {
+    padding: 8px 14px;
+    font-size: 16px;
+  }
+
+  .video-section iframe {
+    width: 100%;
+    height: 200px; /* smaller for mobile */
+  }
+
+  .popup {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup h2 {
+    font-size: 20px;
+  }
+
+  .popup button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<h1>Consistency Tips</h1>
+
+<div class="box">
+  <h2>1. Set Clear Goals</h2>
+  <p>Know exactly what you want to achieve. Make your goals simple and easy to follow.</p>
+</div>
+
+<div class="box">
+  <h2>2. Build Good Habits</h2>
+  <p>Create small routines you can do every day. Start easy and slowly add harder tasks.</p>
+</div>
+
+<div class="box">
+  <h2>3. Use Reminders</h2>
+  <p>Keep track of what you do. Use alarms, calendars, or notes to remind you.</p>
+</div>
+
+<div class="box">
+  <h2>4. Share Your Goals</h2>
+  <p>Tell someone about your goals. Check in with them for support and motivation.</p>
+</div>
+
+<div class="box">
+  <h2>5. Focus on Doing, Not Perfect</h2>
+  <p>It’s okay if it’s not perfect. Celebrate small wins to stay motivated.</p>
+</div>
+
+<div class="box">
+  <h2>6. Face Challenges</h2>
+  <p>Take action even if it’s hard. Keep going even if you make mistakes.</p>
+</div>
+
+<button onclick="window.location.href='LipimoHome.html'">Go Back</button>
+/* Make videos responsive */
+.video-section iframe {
+  width: 100%;       /* Full width of the container */
+  max-width: 100%;   /* Prevent overflow */
+  height: auto;      /* Maintain aspect ratio */
+  aspect-ratio: 16 / 9; /* Keeps standard video ratio */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+
+</body>
+</html>

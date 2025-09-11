@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Secret Photo Flight</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #fddde6;
+      font-family: Garamond, serif;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    video {
+      display: block;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 12px;
+      border: none;
+      background-color: #f8a5c2;
+      color: white;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    .flying-photo {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      animation: fly 5s forwards;
+    }
+
+    @keyframes fly {
+      0% { transform: translate(0,0) rotate(0deg); }
+      20% { transform: translate(250px,-150px) rotate(72deg); }
+      40% { transform: translate(-200px,200px) rotate(144deg); }
+      60% { transform: translate(150px,-200px) rotate(216deg); }
+      80% { transform: translate(-150px,150px) rotate(288deg); }
+      100% { transform: translate(0,0) rotate(360deg); }
+    }
+
+    #message {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 20px;
+      display: none;
+    }
+
+    #goBackBtn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background-color: #f8a5c2;
+      border: 2px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Capture Your Photo!</h1>
+  <video id="video" width="320" height="240" autoplay></video>
+  <button id="captureBtn">Take Photo</button>
+  <div id="message">You are the best!</div>
+
+  <!-- Go Back button fixed at bottom left -->
+  <button id="goBackBtn" onclick="goBack()">Go Back</button>
+
+  <script>
+    const video = document.getElementById('video');
+    const captureBtn = document.getElementById('captureBtn');
+    const message = document.getElementById('message');
+
+    function goBack() {
+      window.location.href = 'page4.html';
+    }
+
+    // Ask for camera access
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        alert('Camera access denied or not available.');
+      });
+
+    captureBtn.addEventListener('click', () => {
+      // Capture current frame
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Create flying photo
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      img.className = 'flying-photo';
+      document.body.appendChild(img);
+
+      // Show message after 5 seconds
+      setTimeout(() => {
+        message.style.display = 'block';
+        img.remove(); // Remove flying photo after animation
+      }, 5000);
+    });
+  </script>
+
+</body>
+</html>

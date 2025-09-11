@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>30-Day Systems Tracker</title>
+  <style>
+    body {
+      font-family: Garamond, serif;
+      margin: 0;
+      padding: 0;
+      background: #fdf6f0;
+      color: #444;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      text-align: center;
+      position: relative;
+    }
+    h2 {
+      color: #6a5acd;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .day-btn {
+      background: #f7e6ff;
+      border: none;
+      border-radius: 12px;
+      padding: 20px 10px;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .day-btn:hover {
+      background: #e2cfff;
+    }
+    .day-btn.checked {
+      background: #90ee90;
+      font-weight: bold;
+    }
+    .day-btn.checked::after {
+      content: "✔";
+      font-size: 20px;
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      color: #2e7d32;
+    }
+    .buttons {
+      margin-top: 25px;
+      text-align: center;
+    }
+    button.nav-btn {
+      padding: 12px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .back-btn { background: #ffb6c1; }
+    .reset-btn { background: #ffcc80; }
+    button:hover { opacity: 0.9; }
+
+    /* Next Page button */
+    .next-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(45deg, #ff99cc, #99ccff);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      font-size: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .next-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="next-btn" onclick="window.location.href='pageFinal.html'">Next Page →</button>
+    <h2>30-Day Systems Tracker</h2>
+    <p>Click each day when you complete your system 💪</p>
+
+    <div class="grid" id="dayGrid"></div>
+
+    <div class="buttons">
+      <button class="nav-btn back-btn" onclick="window.location.href='page8.html'">Go Back</button>
+      <button class="nav-btn reset-btn" onclick="resetTracker()">Reset Tracker</button>
+    </div>
+  </div>
+
+  <script>
+    const totalDays = 30;
+    const grid = document.getElementById("dayGrid");
+    let progress = JSON.parse(localStorage.getItem("progress")) || {};
+
+    // Generate 30 buttons
+    for (let i = 1; i <= totalDays; i++) {
+      const btn = document.createElement("button");
+      btn.className = "day-btn";
+      btn.textContent = "Day " + i;
+
+      if (progress[i]) {
+        btn.classList.add("checked");
+      }
+
+      btn.addEventListener("click", () => {
+        progress[i] = !progress[i]; // toggle
+        btn.classList.toggle("checked");
+        localStorage.setItem("progress", JSON.stringify(progress));
+        checkCompletion();
+      });
+
+      grid.appendChild(btn);
+    }
+
+    function resetTracker() {
+      if (confirm("Clear all progress?")) {
+        localStorage.removeItem("progress");
+        location.reload();
+      }
+    }
+
+    function checkCompletion() {
+      const completed = Object.values(progress).filter(Boolean).length;
+      if (completed === totalDays) {
+        launchConfetti();
+        setTimeout(() => {
+          alert("🎉 Very good! This shows that you showed up for yourself every day.\n\nYou are now the disciplined person who's ready to achieve their goals. 🌟 Best of luck on achieving your life next!");
+        }, 500);
+      }
+    }
+
+    // Simple confetti generator
+    function launchConfetti() {
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement("div");
+        confetti.textContent = "🎉";
+        confetti.style.position = "fixed";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = "-20px";
+        confetti.style.fontSize = "20px";
+        confetti.style.animation = `fall ${2 + Math.random() * 3}s linear forwards`;
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+
+    // Keyframes for falling confetti
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes fall {
+        to {
+          transform: translateY(${window.innerHeight + 100}px);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+<!-- Go Back to Lipimo Home Page -->
+<button class="go-back-btn" onclick="window.location.href='lipimoHome.html'">
+  ← Back to Home
+</button>
+
+<style>
+.go-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px; /* fixed to top-left corner */
+  padding: 12px 20px;
+  font-size: 16px;
+  font-family: Garamond, serif;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #444;
+  background: linear-gradient(135deg, #ffd6e8, #d6e8ff);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 1000;
+}
+
+.go-back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Improvements</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #fdf6f9;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #a64ca6;
+    }
+
+    .section {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 80%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    textarea {
+      width: 90%;
+      height: 150px;
+      border: 2px solid #e0bbff;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 14px;
+      resize: none;
+      background: #fff9fd;
+      margin-top: 10px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ffd6e8, #e0bbff);
+      color: #5a3d5c;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.07);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .guidelines {
+      background: #fff0fa;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 80%;
+      text-align: left;
+      color: #5a3d5c;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🌸 Your Improvements 🌸</h2>
+
+  <div class="section">
+    <h3>✨ Me Before ✨</h3>
+    <p>Write about how you were when you first began your journey.</p>
+    <textarea id="beforeText" placeholder="I used to feel..."></textarea>
+  </div>
+
+  <div class="section">
+    <h3>🌱 Me Now 🌱</h3>
+    <p>After a couple of months, describe how you are now and how you’ve grown.</p>
+    <textarea id="nowText" placeholder="Now I feel..."></textarea>
+  </div>
+
+  <button onclick="saveImprovements()">💾 Save My Reflections</button>
+
+  <div class="guidelines">
+    <h3>🌟 Reflection Guidelines 🌟</h3>
+    <ul>
+      <li>Note down all the small and big improvements you notice in yourself.</li>
+      <li>Be honest in your “Me Before” and “Me Now” — it’s your personal growth story.</li>
+      <li>Compare your reflections after two months to see how much progress you’ve made.</li>
+      <li>Celebrate every step forward, no matter how small it feels.</li>
+      <li>Keep updating this space — it’s your mirror of growth! 🌷</li>
+    </ul>
+  </div>
+
+  <script>
+    function saveImprovements() {
+      const beforeText = document.getElementById("beforeText").value;
+      const nowText = document.getElementById("nowText").value;
+      localStorage.setItem("meBefore", beforeText);
+      localStorage.setItem("meNow", nowText);
+      alert("Your reflections have been saved 💖");
+    }
+
+    // Load saved reflections if available
+    window.onload = function() {
+      if (localStorage.getItem("meBefore")) {
+        document.getElementById("beforeText").value = localStorage.getItem("meBefore");
+      }
+      if (localStorage.getItem("meNow")) {
+        document.getElementById("nowText").value = localStorage.getItem("meNow");
+      }
+    }
+  </script>
+\<!-- Go Back button -->
+<button onclick="window.location.href='page4.html'" 
+        style="background: linear-gradient(135deg, #ffe0f0, #d9c7ff);
+               color: #5a3d5c;
+               border: none;
+               padding: 10px 20px;
+               font-size: 16px;
+               font-weight: bold;
+               border-radius: 20px;
+               cursor: pointer;
+               box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+               transition: transform 0.2s ease, box-shadow 0.2s ease;
+               margin-bottom: 20px;">
+  ⬅ Go Back
+</button>
+
+<script>
+  // adds a soft hover animation
+  const goBackBtn = document.querySelector("button[onclick*='page4.html']");
+  goBackBtn.addEventListener("mouseover", () => {
+    goBackBtn.style.transform = "scale(1.07)";
+    goBackBtn.style.boxShadow = "0 6px 12px rgba(0,0,0,0.15)";
+  });
+  goBackBtn.addEventListener("mouseout", () => {
+    goBackBtn.style.transform = "scale(1)";
+    goBackBtn.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
+  });
+</script>
+<!-- Go Back to Lipimo Home Page -->
+<button class="go-back-btn" onclick="window.location.href='lipimoHome.html'">
+  ← Back to Home
+</button>
+
+<style>
+.go-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px; /* fixed to top-left corner */
+  padding: 12px 20px;
+  font-size: 16px;
+  font-family: Garamond, serif;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #444;
+  background: linear-gradient(135deg, #ffd6e8, #d6e8ff);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 1000;
+}
+
+.go-back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+</style>
+
+
+</body>
+</html>

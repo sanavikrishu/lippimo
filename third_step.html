@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Implementation of Habits</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Garamond&display=swap');
+
+    body {
+      font-family: 'Garamond', serif;
+      margin: 0;
+      padding: 30px;
+      background: linear-gradient(135deg, #d0e6ff, #a8c4ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 48px;
+      background: linear-gradient(135deg, #ff85c1, #b496ff, #85c1ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    p.intro {
+      font-size: 22px;
+      max-width: 900px;
+      text-align: justify;
+      line-height: 1.7;
+      color: black;
+      margin-bottom: 30px;
+    }
+
+    .small-text {
+      font-size: 18px;
+      color: black;
+      max-width: 900px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .section {
+      width: 80%;
+      max-width: 650px;
+      background: #fff;
+      border-radius: 25px;
+      padding: 35px;
+      margin-bottom: 35px;
+      text-align: center;
+      box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+      border: 4px solid black; /* base border */
+      position: relative;
+    }
+
+    /* Make flower-like decorative border */
+    .section::before, .section::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: -4px;
+      left: -4px;
+      border: 2px dashed #ff85c1; /* pink dashed top border effect */
+      border-radius: 25px;
+      pointer-events: none;
+    }
+
+    .section::after {
+      border-color: #85c1ff; /* blue dashed bottom border effect */
+      transform: rotate(2deg);
+    }
+
+    .section h2 {
+      font-size: 28px;
+      color: black;
+      margin-bottom: 15px;
+    }
+
+    .section p {
+      font-size: 18px;
+      color: black;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    button {
+      padding: 14px 25px;
+      background: linear-gradient(135deg, #85c1ff, #a8c4ff, #d0e6ff);
+      color: black;
+      font-family: 'Garamond', serif;
+      font-size: 20px;
+      border: 2px solid black;
+      border-radius: 15px;
+      cursor: pointer;
+      margin-top: 30px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #a8c4ff, #d0e6ff, #f0f7ff);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Implementation of Habits</h1>
+
+  <p class="intro">
+    Habits are something that help us to solve problems. Basically, habits find the easiest solutions to our day-to-day problems. 
+    Like if we feel sad and have a Snickers, it instantly cheers us up. Then the next time we're sad, we immediately have a Snickers, 
+    as it is the easiest solution we are aware of. However, habits are very powerful too. They control your life. Habits define your lifestyle, 
+    your identity, and every part about you. To be consistent in anything, you can get habits. By getting habits, you'll always be able to do it every day. 
+    This is a key step to building systems and avoiding social media distractions. Reference: <em>Atomic Habits</em>.
+  </p>
+
+  <div class="small-text">
+    To get a habit, you need 4 things: <strong>Cue, Craving, Response, Reward</strong>.<br><br>
+    - <strong>Cue:</strong> Something that triggers the habit.<br>
+    - <strong>Craving:</strong> Seeing yourself doing the habit with the result. For example, your cue might be seeing your dumbbells, and your craving is imagining your fit body.<br>
+    - <strong>Response:</strong> The routine or behavior itself.<br>
+    - <strong>Reward:</strong> Gives your brain dopamine and makes you want to repeat productive actions.
+  </div>
+
+  <!-- Sections -->
+  <div class="section">
+    <h2>Cue</h2>
+    <p>This is the trigger that starts your habit. It could be something in your environment, a time of day, or an emotion.</p>
+  </div>
+
+  <div class="section">
+    <h2>Craving</h2>
+    <p>This is your motivation. You imagine the positive outcome or benefit of doing the habit, which makes you want to perform it.</p>
+  </div>
+
+  <div class="section">
+    <h2>Response</h2>
+    <p>This is the habit itself, the action you take. It should be simple and easy to do to encourage consistency.</p>
+  </div>
+
+  <div class="section">
+    <h2>Reward</h2>
+    <p>This is the payoff. It gives your brain a positive feeling, reinforcing the habit and making it more likely to repeat in the future.</p>
+  </div>
+
+  <button onclick="window.location.href='LipimoHome.html'">Go Back</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Habit Examples with Feedback</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Garamond&display=swap');
+
+    body {
+      font-family: 'Garamond', serif;
+      margin: 0;
+      padding: 30px;
+      background: linear-gradient(135deg, #d0e6ff, #a8c4ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 48px;
+      background: linear-gradient(135deg, #ff85c1, #b496ff, #85c1ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      width: 80%;
+      max-width: 1000px;
+      margin-bottom: 50px;
+    }
+
+    .box {
+      background: #fff;
+      border: 3px solid black;
+      border-radius: 25px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+    }
+
+    .box h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+      color: black;
+    }
+
+    .box textarea {
+      width: 100%;
+      height: 80px;
+      font-size: 16px;
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      resize: none;
+      font-family: 'Garamond', serif;
+    }
+
+    button {
+      padding: 14px 25px;
+      background: linear-gradient(135deg, #85c1ff, #a8c4ff, #d0e6ff);
+      color: black;
+      font-family: 'Garamond', serif;
+      font-size: 20px;
+      border: 2px solid black;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      transition: 0.3s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #a8c4ff, #d0e6ff, #f0f7ff);
+      transform: scale(1.05);
+    }
+
+    .stars {
+      margin: 20px 0;
+      display: flex;
+      gap: 15px;
+      font-size: 40px;
+      cursor: pointer;
+    }
+
+    #moreMethodsBtn {
+      display: none;
+      background: linear-gradient(135deg, #ff85c1, #85c1ff, #85c1ff);
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Habit System Examples</h1>
+
+  <div class="grid">
+    <div class="box">
+      <h2>Cue</h2>
+      <textarea id="cue" placeholder="Enter your Cue here..."></textarea>
+      <p>Examples: Clock hitting 9 o'clock, seeing dirty gym clothes, seeing dumbbells</p>
+    </div>
+
+    <div class="box">
+      <h2>Craving</h2>
+      <textarea id="craving" placeholder="Enter your Craving here..."></textarea>
+      <p>Examples: Seeing fit body, good grades, smarter brain, being social</p>
+    </div>
+
+    <div class="box">
+      <h2>Response</h2>
+      <textarea id="response" placeholder="Enter your Response here..."></textarea>
+      <p>Examples: Working out, lifting weights, practicing social skills, studying hard</p>
+    </div>
+
+    <div class="box">
+      <h2>Reward</h2>
+      <textarea id="reward" placeholder="Enter your Reward here..."></textarea>
+      <p>Examples: Internal satisfaction, lychee ice cream, cone, cake, dessert</p>
+    </div>
+  </div>
+
+  <button onclick="saveData()">Save</button>
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Habit Feedback</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Garamond&display=swap');
+
+  body {
+    font-family: 'Garamond', serif;
+    margin: 0;
+    padding: 30px;
+    background: linear-gradient(135deg, #d0e6ff, #a8c4ff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 48px;
+    background: linear-gradient(135deg, #ff85c1, #b496ff, #85c1ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .stars {
+    display: flex;
+    gap: 15px;
+    font-size: 50px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  #moreMethodsBtn {
+    display: none;
+    padding: 14px 25px;
+    background: linear-gradient(135deg, #ff85c1, #85c1ff, #85c1ff);
+    color: black;
+    font-family: 'Garamond', serif;
+    font-size: 20px;
+    border: 2px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    margin-top: 20px;
+  }
+
+  #moreMethodsBtn:hover {
+    transform: scale(1.05);
+  }
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .scrolling-tips, .reflection {
+    padding: 20px;
+  }
+
+  .scrolling-tips h2, .reflection h2 {
+    font-size: 22px;
+  }
+
+  .scrolling-tips ul li, .reflection label {
+    font-size: 16px;
+  }
+
+  .toggle-btn, .reset-btn, #goBackBtn {
+    padding: 8px 14px;
+    font-size: 16px;
+  }
+
+  .video-section iframe {
+    width: 100%;
+    height: 200px; /* smaller for mobile */
+  }
+
+  .popup {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup h2 {
+    font-size: 20px;
+  }
+
+  .popup button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<h1>How was this habit activity?</h1>
+
+<div class="stars">
+  <span id="star1" onclick="rateStars(1)">⭐</span>
+  <span id="star2" onclick="rateStars(2)">⭐</span>
+  <span id="star3" onclick="rateStars(3)">⭐</span>
+</div>
+
+<button id="moreMethodsBtn" onclick="window.location.href='consistent.html'">Click here for more methods to stay consistent</button>
+<button onclick="window.location.href='LipimoHome.html'">Go Back</button>
+
+<script>
+  function rateStars(star) {
+    const star1 = document.getElementById('star1');
+    const star2 = document.getElementById('star2');
+    const star3 = document.getElementById('star3');
+    const moreBtn = document.getElementById('moreMethodsBtn');
+
+    // Reset all stars
+    star1.style.display = "inline";
+    star2.style.display = "inline";
+    star3.style.display = "inline";
+    moreBtn.style.display = "none";
+
+    // Adjust stars visibility
+    if(star === 1) {
+      star2.style.display = "none";
+      star3.style.display = "none";
+      alert("I'm sorry this method didn't work. Check out other methods!");
+      moreBtn.style.display = "inline";
+    } else if(star === 2) {
+      star3.style.display = "none";
+      alert("If it's hard to continue, make your craving and reward stronger!");
+    } else if(star === 3) {
+      alert("Good job! Keep doing this!");
+    }
+  }
+</script>
+
+</body>
+</html>
+

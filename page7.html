@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cute Pastel Calendar</title>
+<style>
+  body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #fff0f5;
+    margin: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #ff69b4;
+  }
+  #goBack {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: #ffb6c1;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.25);
+    z-index: 1000;
+  }
+  #goBack:hover { background-color: #ff91a4; }
+  #calendarControls {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  #calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  .day {
+    border: 1px solid #ffb6c1;
+    background-color: #ffe4e1;
+    padding: 10px;
+    min-height: 80px;
+    position: relative;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .day:hover { transform: scale(1.05); }
+  .day.today {
+    background-color: #fffacd;
+    border: 2px solid #ff69b4;
+  }
+  .day-number { font-weight: bold; color: #ff69b4; }
+  .event {
+    background-color: #ffb6c1;
+    color: white;
+    padding: 2px 5px;
+    margin-top: 5px;
+    border-radius: 8px;
+    font-size: 12px;
+    word-wrap: break-word;
+  }
+  #eventModal, #scheduleModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff0f5;
+    border: 2px solid #ff69b4;
+    padding: 20px;
+    border-radius: 12px;
+    z-index: 20;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  #overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,182,193,0.4);
+    z-index: 5;
+  }
+  input, button {
+    border-radius: 12px;
+    border: 1px solid #ff69b4;
+    padding: 5px 10px;
+    margin-top: 10px;
+    font-family: inherit;
+  }
+  button:hover { opacity: 0.9; }
+  #nextPage {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #add8e6;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.25);
+  }
+  #nextPage:hover { background-color: #87ceeb; }
+  #tasks {
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff0f5;
+    border: 2px solid #ffb6c1;
+    border-radius: 15px;
+    text-align: center;
+  }
+  #tasks h3 { color: #ff69b4; margin-bottom: 10px; }
+  #taskList { list-style: none; padding: 0; }
+  #taskList li {
+    background: #ffe4e1;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  .eventItem {
+    background: #ffe4e1;
+    padding: 5px;
+    border-radius: 8px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .menu { cursor: pointer; font-weight: bold; }
+  .menuOptions {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+    z-index: 30;
+  }
+  .menuOptions div { padding: 5px; cursor: pointer; }
+  .menuOptions div:hover { background: #ffb6c1; color: white; }
+</style>
+</head>
+<body>
+
+<button id="goBack" onclick="goBack()">⬅ Go Back</button>
+<h1>calender</h1>
+
+<div id="calendarControls">
+  <button onclick="prevMonth()">◀ Previous</button>
+  <span id="monthYear"></span>
+  <button onclick="nextMonth()">Next ▶</button>
+</div>
+
+<div id="calendar"></div>
+
+<div id="overlay"></div>
+<div id="eventModal">
+  <h3>Add Event</h3>
+  <p id="selectedDate"></p>
+  <input type="text" id="eventInput" placeholder="Event title" />
+  <br>
+  <button onclick="saveEvent()">Save</button>
+  <button onclick="closeModal()">Cancel</button>
+</div>
+
+
+<!-- Schedule Modal -->
+<div id="scheduleModal">
+  <h3>Day Schedule</h3>
+  <div id="scheduleContent"></div>
+  <button onclick="closeSchedule()">Close</button>
+</div>
+
+<button id="nextPage" onclick="goNext()">Next Page ➡</button>
+
+<script>
+  function goBack() { window.location.href = "page4.html"; }
+  function goNext() { window.location.href = "page8.html"; }
+
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
+  const calendar = document.getElementById('calendar');
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  let events = JSON.parse(localStorage.getItem('events')) || {};
+
+  function showCalendar(month, year) {
+    calendar.innerHTML = '';
+    document.getElementById('monthYear').innerText = months[month] + " " + year;
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+      const blank = document.createElement('div');
+      calendar.appendChild(blank);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dayDiv = document.createElement('div');
+      dayDiv.classList.add('day');
+      const today = new Date();
+      if(day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+        dayDiv.classList.add('today');
+      }
+      dayDiv.innerHTML = `<div class="day-number">${day}</div>`;
+
+      const dateKey = `${year}-${month+1}-${day}`;
+      if(events[dateKey]) {
+        events[dateKey].forEach(ev => {
+          const eventDiv = document.createElement('div');
+          eventDiv.classList.add('event');
+          eventDiv.innerText = ev;
+          dayDiv.appendChild(eventDiv);
+        });
+      }
+
+      // single click = schedule, double click = add event
+      dayDiv.onclick = (e) => {
+        if (e.detail === 1) {
+          setTimeout(() => { if (e.detail === 1) showSchedule(dateKey); }, 200);
+        } else if (e.detail === 2) {
+          openModal(dateKey);
+        }
+      };
+
+      calendar.appendChild(dayDiv);
+    }
+  }
+
+  function prevMonth() {
+    currentMonth--;
+    if(currentMonth < 0) { currentMonth = 11; currentYear--; }
+    showCalendar(currentMonth, currentYear);
+  }
+  function nextMonth() {
+    currentMonth++;
+    if(currentMonth > 11) { currentMonth = 0; currentYear++; }
+    showCalendar(currentMonth, currentYear);
+  }
+
+  function openModal(date) {
+    document.getElementById('selectedDate').innerText = date;
+    document.getElementById('eventModal').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+  }
+  function closeModal() {
+    document.getElementById('eventModal').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('eventInput').value = '';
+  }
+  function saveEvent() {
+    const date = document.getElementById('selectedDate').innerText;
+    const title = document.getElementById('eventInput').value;
+    if(!title) return;
+    if(!events[date]) events[date] = [];
+    events[date].push(title);
+    localStorage.setItem('events', JSON.stringify(events));
+    closeModal();
+    showCalendar(currentMonth, currentYear);
+  }
+
+  // Tasks
+  function addTask() {
+    const input = document.getElementById("taskInput");
+    const task = input.value.trim();
+    if (!task) return;
+    const li = document.createElement("li");
+    li.innerText = task;
+    document.getElementById("taskList").appendChild(li);
+    input.value = "";
+  }
+
+  // Schedule functions
+  function showSchedule(dateKey) {
+    const scheduleModal = document.getElementById("scheduleModal");
+    const scheduleContent = document.getElementById("scheduleContent");
+    scheduleContent.innerHTML = "";
+    if(events[dateKey]) {
+      events[dateKey].forEach((ev, index) => {
+        const eventDiv = document.createElement("div");
+        eventDiv.classList.add("eventItem");
+        eventDiv.innerHTML = `
+          <span>${ev}</span>
+          <span class="menu" onclick="toggleMenu(this, '${dateKey}', ${index})">⋮</span>
+          <div class="menuOptions">
+            <div onclick="renameEvent('${dateKey}', ${index})">Rename</div>
+            <div onclick="deleteEvent('${dateKey}', ${index})">Delete</div>
+          </div>`;
+        scheduleContent.appendChild(eventDiv);
+      });
+    } else {
+      scheduleContent.innerHTML = "<p>No events today ✨</p>";
+    }
+    scheduleModal.style.display = "block";
+  }
+  function closeSchedule() {
+    document.getElementById("scheduleModal").style.display = "none";
+  }
+  function toggleMenu(el) {
+    const menu = el.nextElementSibling;
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+  function deleteEvent(dateKey, index) {
+    events[dateKey].splice(index, 1);
+    localStorage.setItem('events', JSON.stringify(events));
+    showSchedule(dateKey);
+    showCalendar(currentMonth, currentYear);
+  }
+  function renameEvent(dateKey, index) {
+    const newName = prompt("Rename event:", events[dateKey][index]);
+    if(newName) {
+      events[dateKey][index] = newName;
+      localStorage.setItem('events', JSON.stringify(events));
+      showSchedule(dateKey);
+      showCalendar(currentMonth, currentYear);
+    }
+  }
+
+  showCalendar(currentMonth, currentYear);
+</script>
+<!-- Tasks -->
+<div id="tasks">
+  <h3>My Tasks</h3>
+  <input type="text" id="taskInput" placeholder="New task">
+  <button onclick="addTask()">Add</button>
+  <ul id="taskList"></ul>
+</div>
+
+<script>
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+  function renderTasks() {
+    const taskList = document.getElementById("taskList");
+    taskList.innerHTML = "";
+    tasks.forEach((task, index) => {
+      const li = document.createElement("li");
+      li.classList.add("taskItem");
+      li.innerHTML = `
+        <span class="taskText">${task}</span>
+        <div class="taskActions">
+          <span class="taskMenu" onclick="toggleTaskMenu(this)">⋮</span>
+          <div class="taskMenuOptions">
+            <div onclick="editTask(${index})">Edit</div>
+            <div onclick="deleteTask(${index})">Delete</div>
+          </div>
+        </div>
+      `;
+      taskList.appendChild(li);
+    });
+  }
+
+  function addTask() {
+    const input = document.getElementById("taskInput");
+    const task = input.value.trim();
+    if (!task) return;
+    tasks.push(task);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    input.value = "";
+    renderTasks();
+  }
+
+  function editTask(index) {
+    const newName = prompt("Edit task:", tasks[index]);
+    if (newName) {
+      tasks[index] = newName.trim();
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      renderTasks();
+    }
+  }
+
+  function deleteTask(index) {
+    tasks.splice(index, 1);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    renderTasks();
+  }
+
+  function toggleTaskMenu(el) {
+    const menu = el.nextElementSibling;
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+
+  renderTasks();
+</script>
+
+<style>
+  #taskList li.taskItem {
+    background: #ffe4e1;
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .taskActions {
+    position: relative;
+  }
+
+  .taskMenu {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 0 6px;
+  }
+
+  .taskMenuOptions {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+    z-index: 10;
+    min-width: 80px;
+  }
+
+  .taskMenuOptions div {
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .taskMenuOptions div:hover {
+    background: #ffb6c1;
+    color: #fff;
+    border-radius: 6px;
+  }
+</style>
+<!-- Go Back to Lipimo Home Page -->
+<button class="go-back-btn" onclick="window.location.href='lipimoHome.html'">
+  ← Back to Home
+</button>
+
+<style>
+.go-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px; /* fixed to top-left corner */
+  padding: 12px 20px;
+  font-size: 16px;
+  font-family: Garamond, serif;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #444;
+  background: linear-gradient(135deg, #ffd6e8, #d6e8ff);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 1000;
+}
+
+.go-back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+</style>
+
+</body>
+</html>

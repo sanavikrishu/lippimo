@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Step 4: Beat Procrastination</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Garamond&display=swap');
+
+    body {
+      font-family: 'Garamond', serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(135deg, #ffd6eb, #e0b3ff); /* Soft pink-purple background */
+    }
+
+    h1 {
+      color: white;
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    button {
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #ff9ace, #c49cff); /* Soft pink-purple button */
+      color: white;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    #videoContainer {
+      margin-top: 20px;
+      display: none; /* Hidden by default */
+    }
+
+    .video-container iframe {
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+      border: none;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .tips {
+      color: black;
+      font-size: 20px;
+      max-width: 800px;
+      margin-top: 35px;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 28px;
+      }
+      button {
+        font-size: 18px;
+        padding: 12px 20px;
+      }
+      .tips {
+        font-size: 18px;
+        padding: 0 10px;
+      }
+    }
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .scrolling-tips, .reflection {
+    padding: 20px;
+  }
+
+  .scrolling-tips h2, .reflection h2 {
+    font-size: 22px;
+  }
+
+  .scrolling-tips ul li, .reflection label {
+    font-size: 16px;
+  }
+
+  .toggle-btn, .reset-btn, #goBackBtn {
+    padding: 8px 14px;
+    font-size: 16px;
+  }
+
+  .video-section iframe {
+    width: 100%;
+    height: 200px; /* smaller for mobile */
+  }
+
+  .popup {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup h2 {
+    font-size: 20px;
+  }
+
+  .popup button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <h1>Now for anything, we always procrastinate.<br>
+  This page is to stop you from procrastinating.</h1>
+
+  <button onclick="toggleVideos()">🎥 Watch Amy Wang’s Videos</button>
+
+  <div id="videoContainer" class="video-container">
+    <!-- Verified Amy Wang videos -->
+    <iframe src="https://www.youtube.com/embed/Z2eADLBcukQ" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/Mz2qcmTdZK0" allowfullscreen></iframe>
+  </div>
+
+  <div class="tips">
+    <p><strong>1.</strong> Prioritize your tasks and responsibilities.</p>
+    <p><strong>2.</strong> Divide the task into smaller parts.</p>
+    <p><strong>3.</strong> Stay away from all-or-none thinking.</p>
+    <p><strong>4.</strong> Take breaks in scheduled increments.</p>
+    <p><strong>5.</strong> Support yourself with like-minded people.</p>
+    <p><strong>6.</strong> Celebrate small wins.</p>
+    <p><strong>7.</strong> Give yourself soft deadlines for completing tasks.</p>
+    <p><strong>8.</strong> Change your mindset.</p>
+    <p><strong>9.</strong> Define the outcome you want.</p>
+    <p><strong>10.</strong> Focus on all the benefits.</p>
+    <p><em>By doing this, you will be able to overcome procrastination. Trust me.</em></p>
+  </div>
+
+  <script>
+    function toggleVideos() {
+      const container = document.getElementById('videoContainer');
+      container.style.display = container.style.display === 'block' ? 'none' : 'block';
+    }
+
+  </script>
+<button onclick="window.location.href='lipimoHome.html'">⬅ Go Back</button>
+/* Make videos responsive */
+.video-section iframe {
+  width: 100%;       /* Full width of the container */
+  max-width: 100%;   /* Prevent overflow */
+  height: auto;      /* Maintain aspect ratio */
+  aspect-ratio: 16 / 9; /* Keeps standard video ratio */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+
+
+</body>
+</html>

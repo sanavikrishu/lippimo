@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Systems Builder</title>
+  <style>
+    body {
+      font-family: Garamond, serif;
+      margin: 20px;
+      background: #fdf6f0; /* pastel background */
+      color: #444;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #6a5acd;
+    }
+    p {
+      line-height: 1.6;
+      font-size: 17px;
+    }
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: bold;
+      color: #444;
+    }
+    input[type="text"] {
+      padding: 8px;
+      width: 100%;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+    .time-slot {
+      margin-top: 12px;
+      padding: 10px;
+      background: #f7e6ff;
+      border-radius: 10px;
+    }
+    .time-label {
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .back-btn {
+      background: #ffb6c1; /* pastel pink */
+      color: #333;
+      margin-right: 10px;
+    }
+    .next-btn {
+      background: #add8e6; /* pastel blue */
+      color: #333;
+    }
+    button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Transform Through Systems</h2>
+    <p>
+      To become a person who achieves their goals and to achieve your goals, 
+      you must become that person first. By that I mean, make that person a part 
+      of your identity, make their habits your habits. For example, if you want 
+      to be a valedictorian, finalize a valedictorian's habits. What would a 
+      valedictorian do? Maybe wake up at 6:30, go to the gym, and then start 
+      studying efficiently using study methods and actually liking studying, 
+      stuff like that. That's what a valedictorian would do. 
+    </p>
+    <p>
+      So, you start becoming a valedictorian by doing that stuff. And then you're 
+      guaranteed to become a valedictorian. Those things are called systems. As 
+      the famous book <em>Atomic Habits</em> says: 
+      <strong>"You won't rise to the level of your goals, you'll fall to the level of your systems."</strong>
+    </p>
+    <p>
+      Hence, this page is to transform who you are by setting your systems.
+    </p>
+
+    <!-- Wake Up & Sleep -->
+    <label for="wakeTime">Wake Up</label>
+    <input type="text" id="wakeTime" placeholder="e.g., 5:30 AM">
+
+    <label for="sleepTime">Sleep</label>
+    <input type="text" id="sleepTime" placeholder="e.g., 10:00 PM">
+
+    <!-- Time Slots -->
+    <h3 style="margin-top:30px; color:#6a5acd;">Set Your Own System</h3>
+    <div id="timeSlots"></div>
+
+    <!-- Buttons -->
+    <div style="margin-top:30px;">
+      <button class="back-btn" onclick="goBack()">Go Back</button>
+      <button class="next-btn" onclick="saveAndNext()">Next Page</button>
+    </div>
+  </div>
+
+  <script>
+    // validate wake/sleep time for AM/PM
+    function validateTime(inputId) {
+      const value = document.getElementById(inputId).value.trim();
+      if (value && !value.toUpperCase().includes("AM") && !value.toUpperCase().includes("PM")) {
+        alert("Please specify AM or PM for " + inputId.replace("Time", ""));
+      }
+    }
+
+    document.getElementById("wakeTime").addEventListener("blur", function() {
+      validateTime("wakeTime");
+    });
+
+    document.getElementById("sleepTime").addEventListener("blur", function() {
+      validateTime("sleepTime");
+    });
+
+    // generate time slots dynamically
+    function generateTimeSlots() {
+      const container = document.getElementById("timeSlots");
+      const hours = [
+        "12 AM", "1 AM", "2 AM", "3 AM", "4 AM", "5 AM", "6 AM", "7 AM", "8 AM", "9 AM", "10 AM", "11 AM",
+        "12 PM", "1 PM", "2 PM", "3 PM", "4 PM", "5 PM", "6 PM", "7 PM", "8 PM", "9 PM", "10 PM", "11 PM"
+      ];
+
+      for (let i = 0; i < hours.length; i++) {
+        const nextHour = hours[(i + 1) % hours.length];
+        const div = document.createElement("div");
+        div.className = "time-slot";
+
+        const label = document.createElement("div");
+        label.className = "time-label";
+        label.textContent = hours[i] + " – " + nextHour;
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "e.g., Study, Gym, Basketball...";
+        input.dataset.label = hours[i] + " – " + nextHour; // save label for later
+
+        div.appendChild(label);
+        div.appendChild(input);
+        container.appendChild(div);
+      }
+    }
+
+    generateTimeSlots();
+
+    // navigation
+    function goBack() {
+      window.location.href = "page7.html";
+    }
+
+    function saveAndNext() {
+      const systems = [];
+
+      // save wake/sleep
+      const wake = document.getElementById("wakeTime").value.trim();
+      const sleep = document.getElementById("sleepTime").value.trim();
+
+      if (wake) systems.push("Wake Up: " + wake);
+      if (sleep) systems.push("Sleep: " + sleep);
+
+      // save hourly slots
+      const inputs = document.querySelectorAll("#timeSlots input");
+      inputs.forEach(input => {
+        if (input.value.trim()) {
+          systems.push(input.dataset.label + " → " + input.value.trim());
+        }
+      });
+
+      localStorage.setItem("dailySystems", JSON.stringify(systems));
+      window.location.href = "pageNext.html";
+    }
+  </script>
+<!-- Go Back to Lipimo Home Page -->
+<button class="go-back-btn" onclick="window.location.href='lipimoHome.html'">
+  ← Back to Home
+</button>
+
+<style>
+.go-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px; /* fixed to top-left corner */
+  padding: 12px 20px;
+  font-size: 16px;
+  font-family: Garamond, serif;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #444;
+  background: linear-gradient(135deg, #ffd6e8, #d6e8ff);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 1000;
+}
+
+.go-back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+</style>
+
+</body>
+</html>

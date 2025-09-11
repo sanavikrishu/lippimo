@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RightTrack — 15-Day LivePath Challenge</title>
+  <style>
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .scrolling-tips, .reflection {
+    padding: 20px;
+  }
+
+  .scrolling-tips h2, .reflection h2 {
+    font-size: 22px;
+  }
+
+  .scrolling-tips ul li, .reflection label {
+    font-size: 16px;
+  }
+
+  .toggle-btn, .reset-btn, #goBackBtn {
+    padding: 8px 14px;
+    font-size: 16px;
+  }
+
+  .video-section iframe {
+    width: 100%;
+    height: 200px; /* smaller for mobile */
+  }
+
+  .popup {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup h2 {
+    font-size: 20px;
+  }
+
+  .popup button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+    /* Gradient pink → purple background */
+    html,body{height:100%;margin:0;font-family: 'Garamond', 'Times New Roman', serif;background:linear-gradient(135deg,#ffd1e8 0%,#c8b4ff 50%,#b8d8ff 100%);color:#1b1b1b}
+    .container{max-width:900px;margin:32px auto;padding:28px;background:rgba(255,255,255,0.85);border-radius:18px;box-shadow:0 12px 40px rgba(40,20,80,0.12)}
+    h1{font-size:28px;margin:6px 0 6px 0;text-align:center}
+    .intro{font-size:16px;line-height:1.5;text-align:center;margin-bottom:18px;padding:0 12px}
+    .instructions{background:linear-gradient(180deg,rgba(255,255,255,0.9),#fff);padding:16px;border-radius:12px;margin-bottom:18px;border:1px solid rgba(0,0,0,0.03)}
+    .instructions h2{margin:0 0 8px 0;font-size:20px}
+    .instructions p{margin:0;font-size:15px;line-height:1.45}
+
+    /* Main challenge card */
+    .challenge{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+    .card{flex:1;min-width:300px;background:linear-gradient(180deg,#fff7fb,#fff);border-radius:14px;padding:18px;box-shadow:0 10px 30px rgba(70,30,90,0.06);border:1px solid rgba(0,0,0,0.03)}
+    .badge{display:inline-block;background:linear-gradient(90deg,#c084fc,#7c3aed);color:white;padding:8px 14px;border-radius:999px;font-weight:700;margin-bottom:12px}
+    .day-title{font-size:18px;margin:6px 0 12px 0}
+    .task-text{font-size:17px;line-height:1.5;margin-bottom:16px}
+    .action-row{display:flex;gap:10px;align-items:center}
+    .btn{background:#6c5ce7;color:white;border:0;padding:10px 16px;border-radius:12px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(108,92,231,0.18)}
+    .btn:disabled{opacity:0.48;cursor:default}
+    .secondary{background:transparent;border:1px solid rgba(0,0,0,0.06);color:#333;padding:8px 12px}
+
+    .progress{height:12px;background:rgba(0,0,0,0.06);border-radius:999px;overflow:hidden;margin-top:12px}
+    .progress .fill{height:100%;background:linear-gradient(90deg,#ff9ccf,#7c5cff);width:0%}
+
+    /* Day list */
+    .days-list{flex-basis:260px}
+    .day-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;margin-bottom:8px;background:linear-gradient(180deg,#fff,#fff);border:1px solid rgba(0,0,0,0.03)}
+    .day-item.locked{opacity:0.5}
+    .day-item strong{font-size:14px}
+    .tiny{font-size:13px;color:#4a4a4a}
+
+    /* inspirational */
+    .inspire{margin-top:18px;padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff7f3);border:1px solid rgba(0,0,0,0.03)}
+    .inspire h3{margin:0 0 8px 0}
+
+    /* final message style */
+    .final{padding:18px;border-radius:12px;background:linear-gradient(90deg,#fff8e6,#fff3f8);border:1px solid rgba(0,0,0,0.03);margin-top:12px}
+
+    /* confetti pieces */
+    .confetti{position:fixed;left:0;top:0;pointer-events:none;width:100%;height:100%;overflow:hidden;z-index:9999}
+    .confetti .piece{position:absolute;width:10px;height:16px;opacity:0;transform:translateY(-20vh) rotate(0);animation:fall 1600ms linear forwards}
+    @keyframes fall{to{transform:translateY(120vh) rotate(540deg);opacity:1}}
+
+    /* footer */
+    footer{margin-top:18px;text-align:center;font-size:13px;color:#3b3b3b}
+
+    /* responsive */
+    @media (max-width:760px){.challenge{flex-direction:column}.days-list{order:2}}
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <h1>RightTrack — 15-Day LivePath Challenge</h1>
+
+    <p class="intro">"This is not one of those aesthetic apps with meaningless steps that make you feel good. This is one of those apps that will change your life for good. Wake up early and feel the difference. Do a workout and feel the difference. That internal satisfaction is worth much more than just sitting on your desk and scrolling on your phone."</p>
+
+    <div class="instructions" aria-labelledby="instructions-heading">
+      <h2 id="instructions-heading">Instructions</h2>
+      <p>
+        Every day, you will do the task that is uploaded on this website. Then, after waking up early, working out, you'll realize that you're not that person who sits on their bed and scrolls and wastes their day and their time on earth. You're that person who wakes up early because they can. You're that person who works out because they have the determination, discipline, resilience to. You're the person who has a positive attitude and studies.
+        <br><br>
+        But this app isn't just your tiny dopamine burst. This app is for long-term success. This app won't just give you that tiny rush of dopamine like how shorts and motivational messages do. In this app, I want to change people's lives for good. That means that after doing atomic habits, you will find a significant change in your life. Yes, it does take quite some time. But this app is designed for people who don't know where to start. Like me, for example. In fact, no one knows where to start. However, once a person figures it out, it's important to share it to everyone. So, this is how you start.
+      </p>
+    </div>
+
+    <div class="challenge">
+      <div class="card">
+        <div class="badge" id="dayBadge">Day 1</div>
+        <div class="day-title">Today's Task</div>
+        <div class="task-text" id="taskText">Loading...</div>
+
+        <div class="action-row">
+          <button id="doneBtn" class="btn">I Did It ✅</button>
+          <button id="skipBtn" class="secondary" title="Use only for emergencies">Skip (not recommended)</button>
+          <div style="flex:1"></div>
+        </div>
+
+        <div class="progress" aria-hidden="true"><div class="fill" id="progFill"></div></div>
+
+        <div id="celebrate" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(90deg,#e6ffef,#f1fff9);font-weight:700;color:#0b6b3a">🎉 You completed today's task. Keep going. Tomorrow gets harder. 🎉</div>
+
+        <div class="final" id="finalMsg" style="display:none;margin-top:12px">
+          <!-- Final Day 15 message inserted here -->
+        </div>
+
+        <div style="margin-top:12px;margin-bottom:6px" class="tiny">Reflection (write 1–3 lines):</div>
+        <textarea id="reflection" rows="3" style="width:100%;border-radius:10px;padding:10px;border:1px solid rgba(0,0,0,0.06);font-family:inherit"></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="saveRef" class="secondary">Save Reflection</button>
+          <button id="resetBtn" class="secondary">Reset Challenge</button>
+        </div>
+      </div>
+
+      <div class="days-list card" aria-label="Days list">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong>15-Day Path</strong>
+          <span class="tiny" id="progressText">Day 1 of 15</span>
+        </div>
+        <div id="daysContainer"></div>
+
+        <div class="inspire">
+          <h3>Think about Amy Wang</h3>
+          <p><strong>Amy Wang</strong> was a consultant and valedictorian who balanced sports with studying at Caltech and graduated with a 4.0 GPA. How did she achieve this? She built unshakable discipline, resilience, and systems. She didn't rely on motivation alone — she built the habits and the work ethic that kept her going. That is what you'll start building here. Welcome to your journey of a future leader.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="tiny">Designed for real change — not quick dopamine. Do the hard things and become somebody who shows up.</div>
+    </footer>
+  </div>
+
+  <div class="confetti" id="confetti"></div>
+
+  <script>
+    // 15-day tasks exactly as provided
+    const tasks = [
+      "Wake up early (aim for 6:15 AM). Feel the freshness today!",
+      "Wake up early + small stretching and workout (few pushups, jumping jacks).",
+      "Wake up early + workout (Pilates / HIIT style session — follow a 20–30m routine).",
+      "Wake up early + workout + journaling. Future-leader journaling: answer 3 questions: (1) How will I make the best of today? (2) How will I study and concentrate today? (3) What are my systems?",
+      "Wake up early + workout + journaling + morning jog.",
+      "Wake up early + workout + journaling + morning jog + cold shower.",
+      "Wake up early + workout + journaling + morning jog + cold shower + only 1 hour phone day.",
+      "Wake up early + workout + journaling + morning jog + cold shower + only 1 hour phone day.",
+      "Wake up early + workout + journaling + morning jog + cold shower + only 1 hour phone day.",
+      "Wake up early + workout + journaling + morning jog + cold shower + only 30 mins phone day.",
+      "Wake up early + workout + journaling + morning jog + cold shower + only 30 mins phone day.",
+      "Wake up early + workout + journaling + morning jog + cold shower + only 20 mins phone day + 2 hours focused study session.",
+      "Wake up early + workout + journaling + morning jog + cold shower + only 15 mins phone day + 2 hours focused study session.",
+      "Wake up early + workout + journaling + morning jog + cold shower + only 15 mins phone day + 2 hours focused study session.",
+      "Wake up early + workout + journaling + morning jog + cold shower + 0 mins phone day + 1 hour focused study session. (Day 15 — final test)"
+    ];
+
+    const maxDay = tasks.length;
+    const dayBadge = document.getElementById('dayBadge');
+    const taskText = document.getElementById('taskText');
+    const doneBtn = document.getElementById('doneBtn');
+    const daysContainer = document.getElementById('daysContainer');
+    const progFill = document.getElementById('progFill');
+    const progressText = document.getElementById('progressText');
+    const celebrate = document.getElementById('celebrate');
+    const finalMsg = document.getElementById('finalMsg');
+
+    // Load persisted current day or start at 1
+    let currentDay = Number(localStorage.getItem('rt_currentDay') || 1);
+    if(currentDay < 1) currentDay = 1;
+    if(currentDay > maxDay) currentDay = maxDay;
+
+    function renderDayList(){
+      daysContainer.innerHTML = '';
+      for(let i=1;i<=maxDay;i++){
+        const div = document.createElement('div');
+        div.className = 'day-item' + (i>currentDay ? ' locked' : '');
+        div.innerHTML = `<strong>Day ${i}</strong><div class='tiny'>${i<currentDay ? 'Done' : (i===currentDay ? 'Today' : 'Locked')}</div>`;
+        daysContainer.appendChild(div);
+      }
+    }
+
+    function render(){
+      dayBadge.textContent = `Day ${currentDay}`;
+      taskText.textContent = tasks[currentDay-1];
+      progressText.textContent = `Day ${currentDay} of ${maxDay}`;
+      const pct = Math.round(((currentDay-1)/ (maxDay)) * 100);
+      progFill.style.width = pct + '%';
+      celebrate.style.display = 'none';
+      finalMsg.style.display = 'none';
+
+      // If completed all days, show final message
+      if(currentDay === maxDay){
+        // special final content appears after marking done; until then, show the Day 15 task
+        // We'll keep the final manifesto hidden until completed
+      }
+
+      renderDayList();
+      updateButtons();
+    }
+
+    function updateButtons(){
+      // Disable done button only when locked etc. It should be enabled for today's task.
+      doneBtn.disabled = false;
+    }
+
+    doneBtn.addEventListener('click', ()=>{
+      // mark today's completion
+      // Save reflection text
+      const ref = document.getElementById('reflection').value.trim();
+      const refs = JSON.parse(localStorage.getItem('rt_reflections')||'{}');
+      refs['day_'+currentDay] = {text: ref, at: new Date().toISOString()};
+      localStorage.setItem('rt_reflections', JSON.stringify(refs));
+
+      // Show small celebration
+      celebrate.style.display = 'block';
+      launchConfetti(24);
+
+      // If it's the final day (15), show the manifesto final message
+      if(currentDay === maxDay){
+        showFinalManifesto();
+        localStorage.setItem('rt_currentDay', currentDay); // stay at final day after completion
+        return;
+      }
+
+      // advance to next day after short delay
+      setTimeout(()=>{
+        currentDay = Math.min(maxDay, currentDay + 1);
+        localStorage.setItem('rt_currentDay', currentDay);
+        document.getElementById('reflection').value = '';
+        render();
+      }, 900);
+    });
+
+    document.getElementById('skipBtn').addEventListener('click', ()=>{
+      if(!confirm('Skipping is not recommended. Are you sure?')) return;
+      // allow skip but still advance
+      if(currentDay < maxDay) currentDay++;
+      localStorage.setItem('rt_currentDay', currentDay);
+      document.getElementById('reflection').value = '';
+      render();
+    });
+
+    document.getElementById('saveRef').addEventListener('click', ()=>{
+      const ref = document.getElementById('reflection').value.trim();
+      const refs = JSON.parse(localStorage.getItem('rt_reflections')||'{}');
+      refs['day_'+currentDay] = {text: ref, at: new Date().toISOString()};
+      localStorage.setItem('rt_reflections', JSON.stringify(refs));
+      alert('Reflection saved.');
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      if(!confirm('Reset the entire 15-day challenge progress? This will clear reflections too.')) return;
+      localStorage.removeItem('rt_currentDay');
+      localStorage.removeItem('rt_reflections');
+      currentDay = 1;
+      document.getElementById('reflection').value = '';
+      render();
+    });
+
+    function showFinalManifesto(){
+      // final manifesto text as provided
+      finalMsg.innerHTML = `<strong>Listen — this is not the finish line.</strong>
+      <p style="margin-top:8px;line-height:1.5">Usually, people stop at their goals. They say, "I've achieved what I wanted," and well, they go back to their old lifestyle. That's a big no. As per the book <em>Atomic Habits</em>, goals are for satisfaction — and when you only chase the goal, you stop improving. Look back at what you did from day 1 to day 15. Now do all of that in a day: wake up early, take a shower, work out, study, journal. This isn't too much — it's you showing up for yourself every single day. This is you being ahead of the world. These are your Atomic Habits: small actions that make massive changes. Never stop. Keep doing these systems every single day. Because that's what you're born to be. That's what everyone's born to be. But you're the one who decides to take action upon it.</p>
+      <div style="margin-top:12px;font-weight:700;color:#6c5ce7">You reached Day 15. Celebrate, reflect, and then keep building. This is your beginning.</div>
+      <div style="margin-top:12px"><button id='finalKeepBtn' class='btn'>I'll keep going — Start the daily routine</button> <button id='finalRestartBtn' class='secondary'>Restart 15-day path</button></div>`;
+
+      finalMsg.style.display = 'block';
+      // wire final buttons
+      document.getElementById('finalKeepBtn').addEventListener('click', ()=>{
+        alert('Powerful. Now do all the daily items every day. You are the one who decides.');
+      });
+      document.getElementById('finalRestartBtn').addEventListener('click', ()=>{
+        if(!confirm('Restart the 15-day path from day 1?')) return;
+        localStorage.removeItem('rt_currentDay');
+        localStorage.removeItem('rt_reflections');
+        currentDay = 1; document.getElementById('reflection').value = '';
+        render();
+      });
+
+      // ensure we don't auto-advance further
+      localStorage.setItem('rt_currentDay', maxDay);
+    }
+
+    // simple confetti
+    function launchConfetti(n=20){
+      const wrap = document.getElementById('confetti');
+      for(let i=0;i<n;i++){
+        const d = document.createElement('div'); d.className='piece';
+        d.style.left = Math.random()*100+'%';
+        d.style.background = `hsl(${Math.random()*360} 80% 65%)`;
+        d.style.width = (6 + Math.random()*10) + 'px';
+        d.style.height = (8 + Math.random()*12) + 'px';
+        d.style.top = (-10 - Math.random()*20) + 'vh';
+        d.style.animationDelay = (Math.random()*300)+'ms';
+        wrap.appendChild(d);
+        setTimeout(()=>d.remove(), 2000);
+      }
+    }
+
+    // initial render
+    render();
+
+    // Accessibility: keyboard shortcut to mark done (D)
+    document.addEventListener('keydown',(e)=>{ if(e.key.toLowerCase()==='d') doneBtn.click(); });
+  </script>
+<!-- Go Back Button -->
+<button class="go-back-btn" onclick="window.location.href='lipimoHome.html'">
+  ← Back to Home
+</button>
+
+<style>
+.go-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 18px;
+  font-size: 16px;
+  font-family: Garamond, serif;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #444;
+  background: linear-gradient(135deg, #ffd6e8, #d6e8ff);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 1000;
+}
+
+.go-back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+</style>
+
+
+
+</body>
+</html>

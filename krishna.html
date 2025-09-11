@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krishna</title>
+<style>
+  /* Body & Background */
+  body {
+    background: linear-gradient(135deg, #ffd6fa, #dab6fc);
+    font-family: 'Garamond', serif;
+    margin: 0;
+    padding: 50px 20px;
+    color: #4a0268;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2.2em;
+    margin-bottom: 30px;
+    color: #6a1b9a;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+
+  /* Buttons */
+  .btn {
+    background: linear-gradient(135deg, #d9a7ff, #b890f0);
+    border: none;
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 16px;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'Garamond', serif;
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover {
+    background: linear-gradient(135deg, #b890f0, #9c6ef0);
+    transform: translateY(-2px);
+    box-shadow: 3px 6px 12px rgba(0,0,0,0.25);
+  }
+
+  /* Output box */
+  #output {
+    margin-top: 30px;
+    font-size: 18px;
+    background: white;
+    color: #4a0268;
+    display: inline-block;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 90%;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+  }
+
+  /* Bottom tab button (optional, consistent feel) */
+  .back-btn {
+    display: inline-block;
+    margin-top: 40px;
+    padding: 10px 20px;
+    background: #d9a7ff;
+    color: white;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .back-btn:hover {
+    background: #b890f0;
+    transform: translateY(-2px);
+    box-shadow: 3px 6px 12px rgba(0,0,0,0.25);
+  }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    h1 { font-size: 1.6em; }
+    .btn { width: 80%; }
+    #output { font-size: 16px; padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Meet Krishu 💜</h1>
+
+<div>
+  <button class="btn" onclick="showMessage('why')">Why Krishna?</button>
+  <button class="btn" onclick="showMessage('who')">Who is Krishna?</button>
+  <button class="btn" onclick="showMessage('more')">Know more about Krishna</button>
+</div>
+
+<div id="output">Click one of the buttons to feel closer to Krishna 💜</div>
+
+<a href="page3.html" class="back-btn">Go Back to Tabs</a>
+
+<script>
+  function showMessage(type) {
+    const output = document.getElementById("output");
+
+    if (type === "why") {
+      output.textContent = "Because he is that one positive spirit which you can rely on to be on your side even in the dark times. For me, Krishna was with me everywhere I went. He was with me when I was happy, sad, angry, or confused — he will never leave you if you love him. Look to your side, he is smiling at you, ready to walk you through this journey.";
+    } else if (type === "who") {
+      output.textContent = "Krishna is now your best friend. If you have any problem, just say 'Krishu, will you please help me?' and in a second, your problem will be solved. Anywhere you are, your best friend is with you.";
+    } else if (type === "more") {
+      output.textContent = "Krishna inspires positivity, guidance, and joy. He is your constant support and companion.";
+    }
+  }
+</script>
+
+</body>
+</html>

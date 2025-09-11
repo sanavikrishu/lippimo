@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Why Choose Lipimo?</title>
+  <style>
+    body {
+      font-family: Garamond, serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #fffafc, #e0f7ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0;
+      font-size: 36px;
+      color: #444;
+    }
+
+    .content-box {
+      background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+      padding: 25px 30px;
+      margin: 20px;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      max-width: 800px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #000;
+    }
+
+    .content-box b {
+      color: #d63384; /* highlight bold text */
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
+
+    .button {
+      background: linear-gradient(135deg, #d8b4e2, #e8c9f0);
+      color: white;
+      font-family: Garamond, serif;
+      font-size: 18px;
+      padding: 15px 25px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.2);
+    }
+
+    /* Pop-up styling */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #ffe6f3, #e0ccff);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      z-index: 999;
+      max-width: 90%;
+      text-align: center;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Why Choose Lipimo?</h1>
+
+  <div class="content-box">
+    Because, you have <b>too much potential</b> that you're wasting on shorts and other items.<br><br>
+    You think that there's something wrong with you when you can't be consistent with anything?<br><br>
+    Well, I designed this website for someone who honestly has so much potential like you but doesn't know how to use it. This is a step-by-step guide, and it is completely real because everyone deserves a new start if they need it, and <b>this is your new start</b>.
+  </div>
+
+  <div class="button-container">
+    <!-- Go back button -->
+    <button class="button" onclick="window.history.back();">⬅ Go Back</button>
+
+    <!-- Not convinced button -->
+    <button class="button" id="notConvincedBtn">I'm still not convinced</button>
+  </div>
+
+  <!-- Pop-up -->
+  <div class="popup" id="popupMsg">
+    Well then, just try once!<br>
+    If it works, congratulations!<br>
+    If it doesn't work, well, that's not possible.<br>
+    Best of luck!
+  </div>
+
+  <script>
+    const notConvincedBtn = document.getElementById('notConvincedBtn');
+    const popup = document.getElementById('popupMsg');
+
+    notConvincedBtn.addEventListener('click', () => {
+      popup.style.display = 'block';
+
+      // Redirect after 10 seconds
+      setTimeout(() => {
+        window.location.href = 'lipimoHome.html';
+      }, 10000);
+    });
+  </script>
+
+</body>
+</html>

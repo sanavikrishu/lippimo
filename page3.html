@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Page 3 - Transformation</title>
+<style>
+  /* General Body Styles */
+  body {
+    font-family: Garamond, serif;
+    background: linear-gradient(145deg, #ffe6f0, #f2e6ff, #e0f7ff);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Centered Buttons Container */
+  .center-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 80px;
+    width: 90%;
+    max-width: 500px;
+  }
+
+  /* Flower Button Styles */
+  .flower-button {
+    width: 100%;
+    background: linear-gradient(135deg, #d8b4e2, #e8c9f0);
+    color: white;
+    border: 2px dashed white;
+    border-radius: 40px;
+    padding: 18px 0;
+    font-size: 22px;
+    cursor: pointer;
+    position: relative;
+    display: block;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  .flower-button:hover {
+    background: linear-gradient(135deg, #c193d4, #d2a8ea);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+  }
+
+  .flower-button::before, .flower-button::after {
+    content: "🌸";
+    position: absolute;
+    font-size: 22px;
+  }
+  .flower-button::before { top: -10px; left: -10px; }
+  .flower-button::after { bottom: -10px; right: -10px; }
+
+  /* Lipimo Text Box */
+  #lipimo-text {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+    display: none;
+    max-width: 600px;
+    background: linear-gradient(145deg, #ffffff, #fff6ff);
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    text-align: left;
+    transition: all 0.4s ease;
+  }
+
+  /* Improvement Box */
+  .flower-btn-wrapper {
+    width: 100%;
+  }
+
+  #improvementBtn {
+    width: 100%;
+    background: linear-gradient(135deg, #dab6fc, #e5c6ff);
+    color: white;
+    padding: 16px 0;
+    font-size: 20px;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+  }
+
+  #improvementBtn:hover {
+    background: linear-gradient(135deg, #c29cf3, #d7b2ff);
+    transform: translateY(-3px);
+  }
+
+  #improvementBox {
+    position: fixed;
+    top: 100px;
+    right: -35%;
+    width: 28%;
+    min-width: 260px;
+    background: linear-gradient(145deg, #ffffff, #fff5ff);
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    border: 3px dashed #db7093;
+    transition: right 0.5s ease, opacity 0.5s ease;
+    z-index: 2;
+    opacity: 0;
+  }
+
+  #improvementBox.show { right: 30px; opacity: 1; }
+
+  .entry {
+    background: #ffeef5;
+    border-radius: 15px;
+    padding: 12px;
+    margin: 12px 0;
+    position: relative;
+  }
+
+  .dots {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 3;
+  }
+  .menu div { padding: 6px 12px; cursor: pointer; }
+  .menu div:hover { background-color: #f1f1f1; }
+
+  /* Challenge Box */
+  .challenge-box {
+    max-width: 380px;
+    margin: 40px auto;
+    padding: 30px;
+    background: linear-gradient(145deg, #f8e6fa, #fff0ff);
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    text-align: center;
+    transition: all 0.4s ease;
+  }
+
+  select {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 15px;
+    border: 1px solid #b39ddb;
+    background: #faf5ff;
+    font-size: 16px;
+  }
+
+  #message {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 15px;
+    background: #fff7d1;
+    display: none;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  /* Buttons */
+  .tasks-btn, .next-button, .go-back-btn {
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    font-family: Garamond, serif;
+    font-size: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+  }
+
+  .tasks-btn { background: linear-gradient(135deg, #dab6fc, #e5c6ff); color: white; padding: 16px 0; width: 100%; margin-top: 15px; }
+  .tasks-btn:hover { background: linear-gradient(135deg, #c29cf3, #d7b2ff); transform: translateY(-3px); }
+
+  .go-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 14px 26px;
+    color: #444;
+    background: linear-gradient(135deg, #ffd6e8, #d6e8ff);
+    z-index: 1000;
+    border-radius: 35px;
+  }
+  .go-back-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+  .next-button {
+    display: block;
+    margin: 30px auto;
+    background: linear-gradient(135deg, #dab8f3, #f2d6ff);
+    color: #333;
+    padding: 16px 0;
+    width: 220px;
+    font-size: 20px;
+  }
+  .next-button:hover { background: linear-gradient(135deg, #cfa6ec, #e2c6ff); transform: translateY(-2px); }
+
+  /* Bottom Tabs */
+  .bottom-tabs {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(135deg, #add8f7, #c6e7ff);
+    padding: 12px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  }
+  .tab { color: white; text-align: center; font-size: 16px; text-decoration: none; padding: 8px 14px; border-radius: 15px; }
+  .tab:hover { background-color: #7ec0f7; }
+
+</style>
+</head>
+<body>
+
+  <!-- Go Back Button -->
+  <button class="go-back-btn" onclick="window.location.href='lipimoHome.html'">← Back to Home</button>
+
+  <div class="center-buttons">
+
+    <!-- Why Lipimo Button -->
+    <button class="flower-button" onclick="toggleLipimoText()">Why Lipimo?</button>
+    <div id="lipimo-text">
+      Because I've been through that pressure too. The pressure to be perfect.  
+      But here you will find how to be the person you've always wanted to be.  
+      This website is for you and everyone facing pressure to succeed. 🌸
+    </div>
+
+    <!-- Improvement Box -->
+    <div class="flower-btn-wrapper">
+      <button id="improvementBtn">How much I improved?</button>
+    </div>
+    <div id="improvementBox"><div id="improvementList"></div></div>
+
+    <!-- Tasks Button -->
+    <button class="tasks-btn" onclick="window.location.href='tasks.html'">Tasks</button>
+
+    <!-- Challenges Dropdown -->
+    <div class="challenge-box">
+      <h2>Challenges Section</h2>
+      <select id="challengeSelect">
+        <option value="">-- Select --</option>
+        <option value="workingOut">Working Out</option>
+        <option value="goodGrades">Getting Good Grades</option>
+        <option value="stopPhone">Stopping Addiction to Phone</option>
+        <option value="bondKrishna">Creating a Better Bond with Krishna</option>
+        <option value="newSkill">Trying to Learn a New Skill</option>
+        <option value="healthyDisciplined">Trying to Be Healthy and Disciplined</option>
+        <option value="kindNice">Trying to Be Kind and Nice</option>
+      </select>
+      <select id="workoutOptions" style="display:none;">
+        <option value="">-- Select Workout Type --</option>
+        <option value="abs">Abs</option>
+        <option value="bicep">Bicep</option>
+        <option value="gainStrength">Gain Strength</option>
+        <option value="other">Other</option>
+      </select>
+      <div id="message"></div>
+    </div>
+
+    <!-- Next Page Button -->
+    <button class="next-button" onclick="window.location.href='page4.html'">Next Page</button>
+
+  </div>
+
+  <!-- Bottom Tabs -->
+  <div class="bottom-tabs">
+    <a href="krishna.html" class="tab">Krishna</a>
+    <a href="profile.html" class="tab">Profile</a>
+    <a href="achievements.html" class="tab">Achievements</a>
+  </div>
+
+<script>
+  // Toggle Why Lipimo Text
+  function toggleLipimoText() {
+    const textBox = document.getElementById("lipimo-text");
+    textBox.style.display = textBox.style.display === "block" ? "none" : "block";
+  }
+
+  // Improvements Local Storage
+  let improvements = JSON.parse(localStorage.getItem("improvements") || "[]");
+  const box = document.getElementById("improvementBox");
+  const list = document.getElementById("improvementList");
+  const button = document.getElementById("improvementBtn");
+
+  function saveImprovements() { localStorage.setItem("improvements", JSON.stringify(improvements)); }
+  function renderList() {
+    list.innerHTML = "";
+    improvements.forEach((text, index) => {
+      const entry = document.createElement("div");
+      entry.className = "entry";
+
+      const textDiv = document.createElement("div");
+      textDiv.textContent = text;
+      entry.appendChild(textDiv);
+
+      const dots = document.createElement("div");
+      dots.textContent = "⋮"; dots.className = "dots";
+
+      const menu = document.createElement("div"); menu.className = "menu";
+
+      const editBtn = document.createElement("div");
+      editBtn.textContent = "Rename";
+      editBtn.onclick = () => {
+        const newText = prompt("Edit your improvement:", improvements[index]);
+        if (newText) { improvements[index] = newText; saveImprovements(); renderList(); }
+      };
+
+      const deleteBtn = document.createElement("div");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.onclick = () => { improvements.splice(index,1); saveImprovements(); renderList(); }
+
+      menu.appendChild(editBtn); menu.appendChild(deleteBtn);
+      entry.appendChild(dots); entry.appendChild(menu);
+
+      dots.onclick = e => { e.stopPropagation(); menu.style.display = menu.style.display === "block" ? "none" : "block"; };
+      document.addEventListener("click", e => { if(!entry.contains(e.target)){ menu.style.display="none"; } });
+
+      list.appendChild(entry);
+    });
+  }
+
+  button.onclick = () => {
+    box.classList.toggle("show");
+    renderList();
+    const newImp = prompt("What changed in you?");
+    if(newImp){ improvements.push(newImp); saveImprovements(); renderList(); }
+  };
+
+  // Challenges Dropdown Logic
+  const challengeSelect = document.getElementById('challengeSelect');
+  const workoutOptions = document.getElementById('workoutOptions');
+  const message = document.getElementById('message');
+
+  function showWorkoutOptions() { workoutOptions.style.display = 'block'; message.style.display='none'; workoutOptions.value=""; }
+
+  challengeSelect.addEventListener('change', function(){
+    if(this.value === 'workingOut'){ showWorkoutOptions(); }
+    else {
+      workoutOptions.style.display = 'none';
+      if(this.value==='goodGrades'){ message.textContent="BB, you're my firework"; message.style.display='block'; }
+      else if(this.value==='stopPhone'){ message.textContent="Put your phone down, you got this!"; message.style.display='block'; }
+      else if(this.value==='bondKrishna'){ message.textContent="Spend quality time with Krishna, cherish every moment!"; message.style.display='block'; }
+      else if(this.value==='newSkill'){ message.textContent="Learning something new is always exciting!"; message.style.display='block'; }
+      else if(this.value==='healthyDisciplined'){ message.textContent="Stay consistent and healthy, small steps count!"; message.style.display='block'; }
+      else if(this.value==='kindNice'){ message.textContent="Kindness is contagious, spread it everywhere!"; message.style.display='block'; }
+      else{ message.style.display='none'; }
+    }
+  });
+
+  challengeSelect.addEventListener('click', function(){ if(this.value==='workingOut'){ showWorkoutOptions(); } });
+
+  workoutOptions.addEventListener('change', function(){
+    if(this.value==='abs'){ message.textContent='Do abs workouts and make it a habit!'; message.style.display='block'; }
+    else if(this.value==='bicep'){ message.textContent='Do bicep workouts and make it a habit!'; message.style.display='block'; }
+    else if(this.value==='gainStrength'){ message.textContent='Focus on gaining strength consistently.'; message.style.display='block'; }
+    else{ message.style.display='none'; }
+  });
+</script>
+</body>
+</html>

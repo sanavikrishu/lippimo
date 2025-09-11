@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>get your motivation over here!</title>
+  <style>
+    body {
+      font-family: Garamond, serif;
+      background-color: #fef6f9;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      justify-content: flex-start;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .nav-button, #celebrateButton, #challengesButton {
+      padding: 12px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 16px;
+      background-color: #dab8f3; 
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-top: 10px;
+    }
+
+    .nav-button:hover, #celebrateButton:hover, #challengesButton:hover {
+      background-color: #cfa6ec;
+    }
+
+    #headerImage {
+      margin-top: 20px;
+      width: 300px;
+      max-width: 90%;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #content-section {
+      background-color: #ffe4ec;
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 20px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #nameInput {
+      margin-top: 20px;
+      padding: 10px;
+      width: 70%;
+      max-width: 300px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    #motivation {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #9c27b0;
+      font-weight: bold;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>get your motivation over here!
+motivation page</h1>
+
+  <!-- Header Image -->
+  <img id="headerImage" src="https://i.pinimg.com/originals/e4/52/cf/e452cf284e8b41bca79345fbeaa4bf83.jpg" alt="hearts for youuuu">
+
+  <!-- Navigation Buttons -->
+  <div class="button-container">
+    <button class="nav-button" onclick="goBack()">Go Back to Page 4</button>
+    <button class="nav-button" id="celebrateButton">Celebrate 🎉</button>
+  </div>
+
+  <!-- Content Section -->
+  <div id="content-section">
+    <h2>Keep Going!</h2>
+    <p>This page can track your progress, show new challenges, or celebrate achievements. Stay motivated and consistent!</p>
+  </div>
+
+  <!-- Name Input -->
+  <input type="text" id="nameInput" placeholder="Type your name..." oninput="updateMotivation()">
+
+  <!-- Motivation Text -->
+  <div id="motivation">X is the greatest, X is the best!</div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Confetti Sound -->
+  <audio id="confettiSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // Navigation
+    function goBack() {
+      window.location.href = 'page4.html';
+    }
+
+    // Update motivation text dynamically
+    function updateMotivation() {
+      const name = document.getElementById("nameInput").value.trim();
+      const motivation = document.getElementById("motivation");
+      if(name === "") {
+        motivation.textContent = "X is the greatest, X is the best!";
+      } else {
+        motivation.textContent = `${name} is the greatest, ${name} is the best!`;
+      }
+    }
+
+    // Confetti
+    function triggerConfetti() {
+      const duration = 10 * 1000; // 10 seconds
+      const end = Date.now() + duration;
+      const sound = document.getElementById("confettiSound");
+      sound.play();
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+
+    document.getElementById("celebrateButton").addEventListener("click", triggerConfetti);
+  </script>
+<!-- Go Back to Lipimo Home Page -->
+<button class="go-back-btn" onclick="window.location.href='lipimoHome.html'">
+  ← Back to Home
+</button>
+
+<style>
+.go-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px; /* fixed to top-left corner */
+  padding: 12px 20px;
+  font-size: 16px;
+  font-family: Garamond, serif;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #444;
+  background: linear-gradient(135deg, #ffd6e8, #d6e8ff);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 1000;
+}
+
+.go-back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+</style>
+
+
+</body>
+</html>

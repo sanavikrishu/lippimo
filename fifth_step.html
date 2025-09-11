@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stop Social Media Addiction</title>
+  <style>
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .scrolling-tips, .reflection {
+    padding: 20px;
+  }
+
+  .scrolling-tips h2, .reflection h2 {
+    font-size: 22px;
+  }
+
+  .scrolling-tips ul li, .reflection label {
+    font-size: 16px;
+  }
+
+  .toggle-btn, .reset-btn, #goBackBtn {
+    padding: 8px 14px;
+    font-size: 16px;
+  }
+
+  .video-section iframe {
+    width: 100%;
+    height: 200px; /* smaller for mobile */
+  }
+
+  .popup {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup h2 {
+    font-size: 20px;
+  }
+
+  .popup button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Garamond, serif;
+      background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+      color: black;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    /* Strategies box */
+    .scrolling-tips {
+      background: linear-gradient(135deg, #ffe6f3, #f0e0ff);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
+    }
+
+    .scrolling-tips h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .scrolling-tips ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .scrolling-tips ul li {
+      margin-bottom: 15px;
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .scrolling-tips ul li::before {
+      content: "🌸";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .scrolling-tips .note {
+      margin-top: 25px;
+      font-size: 18px;
+      font-style: italic;
+    }
+
+    /* Toggle button */
+    .toggle-btn {
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    /* Video section */
+    .video-section {
+      margin-top: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .video-section iframe {
+      width: 100%;
+      height: 360px;
+      max-width: 560px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Reflection questions */
+    .reflection {
+      margin-top: 50px;
+      background: linear-gradient(135deg, #ffe6f3, #f0e0ff);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .reflection h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    .reflection .question {
+      margin-bottom: 20px;
+    }
+
+    .reflection label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .reflection textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      font-family: Garamond, serif;
+      font-size: 16px;
+      resize: vertical;
+      min-height: 80px;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .reset-btn {
+      display: block;
+      margin: 25px auto 0 auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      background: #ffb3d9;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Popup */
+    .popup {
+      display: none; /* hidden by default */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff0f6;
+      border: 2px solid #ff77a9;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      z-index: 1000;
+      width: 90%;
+      max-width: 350px;
+    }
+
+    .popup button {
+      margin: 8px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .submit-btn { background: #ff77a9; color: white; }
+    .delete-btn { background: #ffc0cb; color: #900; }
+    .delete-btn:hover { background: #ff99b3; }
+    .submit-btn:hover { background: #ff5599; }
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Strategies box -->
+    <div class="scrolling-tips">
+      <h2>🌸 To Stop Scrolling Addiction 🌸</h2>
+      <ul>
+        <li><strong>Set a Timer:</strong> Limit your screen time by setting a timer for how long you can scroll.</li>
+        <li><strong>Replace the Habit:</strong> Substitute scrolling with a productive activity whenever you feel the urge.</li>
+        <li><strong>Use App Restrictions:</strong> Implement app restrictions to create barriers against excessive scrolling.</li>
+        <li><strong>Practice Mindful Scrolling:</strong> Approach social media with purpose and intention.</li>
+        <li><strong>Social Media Detox:</strong> Try a weekend detox from social media or move tempting apps into a folder named “Pause”.</li>
+      </ul>
+      <p class="note">✨ These strategies can help you regain control over your screen time and reduce mindless scrolling. ✨</p>
+    </div>
+
+    <!-- Button + videos -->
+    <button class="toggle-btn" id="toggleVideosBtn">
+      Show Amy Wang Videos
+    </button>
+
+    <div class="video-section" id="videosContainer">
+      <iframe src="https://www.youtube.com/embed/zxgxRL4-Bok" frameborder="0" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/wotiwP72WCI" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <!-- Reflection questions -->
+    <div class="reflection">
+      <h2>🌼 Reflection Questions 🌼</h2>
+
+      <div class="question">
+        <label for="q1">What am I missing on by scrolling in social media right now?</label>
+        <textarea id="q1" placeholder="Write your thoughts here..."></textarea>
+      </div>
+
+      <div class="question">
+        <label for="q2">Why scroll when I could exercise, study, play, and do so many more things? Why am I scrolling right now?</label>
+        <textarea id="q2" placeholder="Write your thoughts here..."></textarea>
+      </div>
+
+      <div class="question">
+        <label for="q3">What would my role models do?</label>
+        <textarea id="q3" placeholder="Write your thoughts here..."></textarea>
+      </div>
+
+      <div class="question">
+        <label for="q4">What would my five-year-old self want for me — to just scroll?</label>
+        <textarea id="q4" placeholder="Write your thoughts here..."></textarea>
+      </div>
+
+      <button class="reset-btn" id="resetAnswers">🧹 Refresh Answers</button>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div class="overlay" id="overlay"></div>
+  <div class="popup" id="popup">
+    <h2>Are you sure?</h2>
+    <p>Do you really want to delete all your answers?</p>
+    <button class="delete-btn" id="confirmDelete">Yes, delete</button>
+    <button class="submit-btn" id="submitAnswersBtn">Submit</button>
+  </div>
+
+  <script>
+    // Video toggle
+    const toggleBtn = document.getElementById('toggleVideosBtn');
+    const videosDiv = document.getElementById('videosContainer');
+    let videosVisible = false;
+
+    toggleBtn.addEventListener('click', () => {
+      videosVisible = !videosVisible;
+      if (videosVisible) {
+        videosDiv.style.display = 'flex';
+        toggleBtn.textContent = 'Hide Amy Wang Videos';
+      } else {
+        videosDiv.style.display = 'none';
+        toggleBtn.textContent = 'Show Amy Wang Videos';
+      }
+    });
+
+    // Reflection answers persistence
+    const textareas = document.querySelectorAll('.reflection textarea');
+
+    textareas.forEach((ta, i) => {
+      const key = `reflection_q${i+1}`;
+      ta.value = localStorage.getItem(key) || '';
+      ta.addEventListener('input', () => {
+        localStorage.setItem(key, ta.value);
+      });
+    });
+
+    // Popup functionality
+    const resetBtn = document.getElementById('resetAnswers');
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    const confirmDelete = document.getElementById('confirmDelete');
+    const submitBtn = document.getElementById('submitAnswersBtn');
+
+    // Show popup on refresh click
+    resetBtn.addEventListener('click', () => {
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+    });
+
+    // Hide popup function
+    function hidePopup() {
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+    }
+
+    // Confirm delete
+    confirmDelete.addEventListener('click', () => {
+      if (confirm("This will erase all your answers. Are you really sure?")) {
+        textareas.forEach(t => {
+          t.value = '';
+          localStorage.removeItem(t.id);
+        });
+        alert("All answers deleted! 💖");
+        hidePopup();
+      }
+    });
+
+    // Submit answers
+    submitBtn.addEventListener('click', () => {
+      alert("Your answers have been saved! 🌸");
+      hidePopup();
+    });
+
+    </script>
+<div style="
+  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+  color: black;
+  font-family: Garamond, serif;
+  font-size: 18px;
+  padding: 25px 30px;
+  border-radius: 20px;
+  max-width: 700px;
+  margin: 20px auto;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  line-height: 1.6;
+  text-align: left;
+">
+  <h2 style="margin-top: 0; font-family: Garamond, serif; font-size: 24px;">PRO TIP</h2>
+  Don't make a big change in your screen time, like from 8 hours to just 2 hours. Try to make it subtle, like how Gohar's guide says, decrease your screen time to 90% of your screen time. So if your screen time is 8 hours, decrease it to 90% of 8 hours, then 80%, and slowly decrease it to 0%, and it works. Just don't hurry it up, otherwise you'll give up as soon as you start. Best of luck in implementing good habits and stopping your screen time!
+</div>
+<button id="goBackBtn" style="
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+  color: black;
+  font-family: Garamond, serif;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
+">⬅ Go Back</button>
+
+<script>
+  document.getElementById('goBackBtn').addEventListener('click', () => {
+    history.back();
+  });
+</script>
+</body>
+</html>

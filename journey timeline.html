@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Journey</title>
+  <style>
+    body {
+      background-color: #fce4ec; /* Baby pink */
+      font-family: Garamond, serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .journey-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .journey-line {
+      position: relative;
+      width: 120px;
+      height: 90%;
+    }
+
+    svg {
+      width: 120px;
+      height: 100%;
+    }
+
+    .checkpoint {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      font-family: Garamond, serif;
+      font-weight: bold;
+      font-size: 20px;
+      color: #4a148c;
+    }
+
+    .profile-pic {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+
+<div class="journey-container">
+  <div class="journey-line">
+    <svg viewBox="0 0 120 1000" preserveAspectRatio="none">
+      <!-- Super curly vertical line -->
+      <path id="journeyPath" d="
+        M60 0
+        Q0 100, 60 200
+        Q120 300, 60 400
+        Q0 500, 60 600
+        Q120 700, 60 800
+        Q0 900, 60 1000
+      " stroke="#90caf9" stroke-width="4" fill="none"/>
+    </svg>
+
+    <!-- K Checkpoints on the path -->
+    <div class="checkpoint" style="top: 200px; left: 60px;">K</div>
+    <div class="checkpoint" style="top: 400px; left: 60px;">K</div>
+    <div class="checkpoint" style="top: 600px; left: 60px;">K</div>
+    <div class="checkpoint" style="top: 800px; left: 60px;">K</div>
+    <div class="checkpoint" style="top: 1000px; left: 60px;">K</div>
+
+    <!-- Profile Picture -->
+    <img id="profilePic" src="profile.jpg" alt="Profile" class="profile-pic" />
+  </div>
+</div>
+
+<script>
+  // Set journey progress: 0 = top, 1 = bottom
+  const progress = 0.35; // Adjust as needed
+
+  const path = document.getElementById("journeyPath");
+  const profilePic = document.getElementById("profilePic");
+
+  const pathLength = path.getTotalLength();
+  const point = path.getPointAtLength(progress * pathLength);
+
+  // Position profile on the SVG path
+  const container = document.querySelector(".journey-line");
+  profilePic.style.left = `${point.x}px`;
+  profilePic.style.top = `${point.y}px`;
+</script>
+
+</body>
+</html>

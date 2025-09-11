@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+  const body = document.body;
+  const celebrationText = document.getElementById('celebrationText');
+
+  // Create confetti
+  const confettiCount = 100;
+  const confettiArray = [];
+
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
+    confetti.style.width = confetti.style.height = (Math.random() * 10 + 5) + 'px';
+    confetti.style.animationDuration = 2 + Math.random() * 1 + 's';
+    body.appendChild(confetti);
+    confettiArray.push(confetti);
+  }
+
+  // Remove confetti after 3 seconds
+  setTimeout(() => {
+    confettiArray.forEach(c => c.remove());
+
+    // Show celebration text with emoji
+    celebrationText.innerHTML = `🎉 Congratulations on achieving the secret chamber! 🎉<br>Now since you have achieved it, you will be hit with one of the greatest surprises ever.`;
+    celebrationText.style.display = 'block';
+
+    // Redirect to page6 after 5 seconds
+    setTimeout(() => {
+      window.location.href = 'page6.html';
+    }, 5000);
+
+  }, 3000);
+</script>
+</body>
+</html>

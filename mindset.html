@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindset Page</title>
+  <style>
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .scrolling-tips, .reflection {
+    padding: 20px;
+  }
+
+  .scrolling-tips h2, .reflection h2 {
+    font-size: 22px;
+  }
+
+  .scrolling-tips ul li, .reflection label {
+    font-size: 16px;
+  }
+
+  .toggle-btn, .reset-btn, #goBackBtn {
+    padding: 8px 14px;
+    font-size: 16px;
+  }
+
+  .video-section iframe {
+    width: 100%;
+    height: 200px; /* smaller for mobile */
+  }
+
+  .popup {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup h2 {
+    font-size: 20px;
+  }
+
+  .popup button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+    @import url('https://fonts.googleapis.com/css2?family=Garamond&display=swap');
+
+    body {
+      font-family: 'Garamond', serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffd6f0, #e3d1ff, #d0f0ff);
+      background-attachment: fixed;
+      color: #333;
+    }
+
+    .box {
+      background: linear-gradient(145deg, #fff0f5, #f3e8ff);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .box h2 {
+      margin-top: 0;
+      font-size: 1.8em;
+      color: #4b2e83;
+    }
+
+    .top-right {
+      float: right;
+      font-size: 0.9em;
+      color: #6a4dbf;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-family: 'Garamond', serif;
+      background: #fff8ff;
+    }
+
+    button {
+      padding: 12px 18px;
+      background: linear-gradient(135deg, #f8c8ff, #c8baff);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Garamond', serif;
+      font-size: 1em;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #e2aaff, #b496ff);
+    }
+
+    .checklist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .checklist label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Box 1: Positive People -->
+  <div class="box" id="box1">
+    <h2>Be Around Positive People <span class="top-right">Your Inspiring People</span></h2>
+    <p>List down the top five people who make you feel positive and inspired:</p>
+    <ol>
+      <li><input type="text" id="person1" placeholder="Person 1"></li>
+      <li><input type="text" id="person2" placeholder="Person 2"></li>
+      <li><input type="text" id="person3" placeholder="Person 3"></li>
+      <li><input type="text" id="person4" placeholder="Person 4"></li>
+      <li><input type="text" id="person5" placeholder="Person 5"></li>
+    </ol>
+    <button onclick="savePeople()">Save People</button>
+  </div>
+
+  <!-- Box 2: Picture Your Success -->
+  <div class="box" id="box2">
+    <h2>Picture Your Success</h2>
+    <p>Write your success goals and the steps to reach them one by one. This will make it easier to take action and feel motivated.</p>
+    <textarea id="successGoals" rows="6" placeholder="Write your goals and steps here..."></textarea>
+    <button onclick="saveSuccess()">Save Goals</button>
+  </div>
+
+  <!-- Box 3: Set Achievable Goals -->
+  <div class="box" id="box3">
+    <h2>Set Achievable Goals</h2>
+    <p>Break down your goal into small steps. Write them here or in a journal/diary. Focus on the small steps (leading indicators) to reach your goal.</p>
+    <textarea id="achievableGoals" rows="6" placeholder="Write your small steps here..."></textarea>
+    <button onclick="saveAchievable()">Save Steps</button>
+  </div>
+
+  <!-- Box 4: Challenge Negative Beliefs -->
+  <div class="box" id="box4">
+    <h2>Challenge Negative Beliefs</h2>
+    <p>List down all the thoughts that hold you back:</p>
+    <textarea id="negativeThoughts" rows="4" placeholder="Negative thoughts..."></textarea>
+    <p>Now write thoughts and mindset to cheer yourself up. Be your best friend:</p>
+    <textarea id="positiveThoughts" rows="4" placeholder="Positive thoughts..."></textarea>
+    <button onclick="saveBeliefs()">Save Thoughts</button>
+  </div>
+
+  <!-- Box 5: Practice Gratitude -->
+  <div class="box" id="box5">
+    <h2>Practice Gratitude</h2>
+    <p>Start a gratitude journal. Write all the things you are thankful for.</p>
+    <textarea id="gratitude" rows="4" placeholder="Write what you are grateful for..."></textarea>
+    <button onclick="saveGratitude()">Save Gratitude</button>
+    <p>Tick the days you did your gratitude journaling:</p>
+    <div class="checklist" id="gratitudeChecklist"></div>
+  </div>
+
+  <script>
+    // Load saved data on page load
+    window.onload = function() {
+      // Load people
+      for(let i=1;i<=5;i++){
+        if(localStorage.getItem('person'+i)){
+          document.getElementById('person'+i).value = localStorage.getItem('person'+i);
+        }
+      }
+      // Load goals and steps
+      if(localStorage.getItem('successGoals')) document.getElementById('successGoals').value = localStorage.getItem('successGoals');
+      if(localStorage.getItem('achievableGoals')) document.getElementById('achievableGoals').value = localStorage.getItem('achievableGoals');
+      if(localStorage.getItem('negativeThoughts')) document.getElementById('negativeThoughts').value = localStorage.getItem('negativeThoughts');
+      if(localStorage.getItem('positiveThoughts')) document.getElementById('positiveThoughts').value = localStorage.getItem('positiveThoughts');
+      if(localStorage.getItem('gratitude')) document.getElementById('gratitude').value = localStorage.getItem('gratitude');
+
+      // Create 30-day checklist
+      const checklistContainer = document.getElementById('gratitudeChecklist');
+      for(let day=1; day<=30; day++){
+        let label = document.createElement('label');
+        let checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'day'+day;
+        checkbox.checked = localStorage.getItem('day'+day) === 'true';
+        checkbox.onchange = function(){ localStorage.setItem('day'+day, this.checked); };
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode('Day '+day));
+        checklistContainer.appendChild(label);
+      }
+    }
+
+    // Save functions
+    function savePeople(){
+      for(let i=1;i<=5;i++){
+        localStorage.setItem('person'+i, document.getElementById('person'+i).value);
+      }
+      alert('People saved!');
+    }
+    function saveSuccess(){
+      localStorage.setItem('successGoals', document.getElementById('successGoals').value);
+      alert('Goals saved!');
+    }
+    function saveAchievable(){
+      localStorage.setItem('achievableGoals', document.getElementById('achievableGoals').value);
+      alert('Steps saved!');
+    }
+    function saveBeliefs(){
+      localStorage.setItem('negativeThoughts', document.getElementById('negativeThoughts').value);
+      localStorage.setItem('positiveThoughts', document.getElementById('positiveThoughts').value);
+      alert('Thoughts saved!');
+    }
+    function saveGratitude(){
+      localStorage.setItem('gratitude', document.getElementById('gratitude').value);
+      alert('Gratitude saved!');
+    }
+  </script>
+<a href="lipimoHome.html" style="
+  display: inline-block;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #f8c8ff, #c8baff);
+  color: white;
+  font-family: 'Garamond', serif;
+  font-size: 1em;
+  text-decoration: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+">
+  Go Back
+</a>
+
+<style>
+  a:hover {
+    background: linear-gradient(135deg, #e2aaff, #b496ff);
+  }
+</style>
+
+
+</body>
+</html>
