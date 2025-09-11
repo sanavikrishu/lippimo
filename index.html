@@ -562,21 +562,28 @@ cosmosta chipion
   });
 })();
 </script>
-<!-- Review Button -->
+<!-- Big Aesthetic Review Button -->
 <button onclick="openReviewForm()" 
-        style="padding: 10px 20px; 
-               background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a18cd1); 
-               color: white; 
-               border: none; 
-               border-radius: 12px; 
-               cursor: pointer; 
-               font-size: 16px;">
+        style="
+            padding: 20px 50px;
+            background: linear-gradient(135deg, #ffc1e3, #d9b3ff);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 22px;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        "
+        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.2)';"
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)';"
+>
   Review
 </button>
 
 <script>
 function openReviewForm() {
-  // Opens the Google Form in a new tab
   window.open("https://docs.google.com/forms/d/e/1FAIpQLScfoENh9WmsKkXwlbJTUNk2qUXkIRYGeM1W9qTrrHP2-fDBIQ/viewform?usp=dialog", "_blank");
 }
 </script>
