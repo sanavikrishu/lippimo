@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Page of Lipimo</title>
+
+  <style>
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .scrolling-tips, .reflection {
+    padding: 20px;
+  }
+
+  .scrolling-tips h2, .reflection h2 {
+    font-size: 22px;
+  }
+
+  .scrolling-tips ul li, .reflection label {
+    font-size: 16px;
+  }
+
+  .toggle-btn, .reset-btn, #goBackBtn {
+    padding: 8px 14px;
+    font-size: 16px;
+  }
+
+  .video-section iframe {
+    width: 100%;
+    height: 200px; /* smaller for mobile */
+  }
+
+  .popup {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup h2 {
+    font-size: 20px;
+  }
+
+  .popup button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+    body {
+      font-family: Garamond, serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #fffafc, #e0f7ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      margin: 30px 0;
+      font-size: 36px;
+      color: #444;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 20px;
+      width: 80%;
+      max-width: 1000px;
+      margin-bottom: 60px;
+    }
+
+
+    .box {
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      color: #444;
+      background: linear-gradient(135deg, #ffe6f0, #e6f0ff);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .section {
+      width: 80%;
+      max-width: 800px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      font-size: 20px;
+      color: #333;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+
+    /* Shared big button style */
+    .large-step {
+      position: relative;
+      width: 500px;
+      height: 150px;
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #d8b4e2, #e8c9f0);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      margin: 30px 0;
+      overflow: hidden;
+    }
+
+    .large-step:hover {
+      transform: scale(1.05);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+      background: linear-gradient(135deg, #c193d4, #d2a8ea);
+    }
+
+    /* Floating flowers */
+    .flower {
+      position: absolute;
+      font-size: 28px;
+      opacity: 0.8;
+      animation: float 6s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    /* First button flowers */
+    #firstStepBtn .f1 { top: 10%; left: 15%; animation-delay: 0s; }
+    #firstStepBtn .f2 { top: 20%; left: 70%; animation-delay: 1s; }
+    #firstStepBtn .f3 { top: 60%; left: 25%; animation-delay: 2s; }
+    #firstStepBtn .f4 { top: 50%; left: 80%; animation-delay: 3s; }
+    #firstStepBtn .f5 { top: 75%; left: 40%; animation-delay: 4s; }
+
+    /* Second button flowers */
+    #secondStepBtn .s1 { top: 12%; left: 10%; animation-delay: 0s; }
+    #secondStepBtn .s2 { top: 18%; right: 15%; animation-delay: 1s; }
+    #secondStepBtn .s3 { top: 55%; left: 22%; animation-delay: 2s; }
+    #secondStepBtn .s4 { top: 48%; right: 18%; animation-delay: 3s; }
+    #secondStepBtn .s5 { bottom: 15%; left: 60%; animation-delay: 4s; }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(15deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Home Page of Lipimo</h1>
+<h4> ONLY FREE FOR THE FIRST 100 USERS</h4>
+
+  <!-- TOP BUTTONS WRAPPED IN FLEX -->
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    flex-wrap: wrap;
+  ">
+
+    <!-- First button -->
+    <div 
+      onclick="window.location.href='y.html'" 
+      style="
+        background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+        color: black;
+        font-family: Garamond, serif;
+        font-size: 16px;
+        padding: 15px 25px;
+        border-radius: 20px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        flex: 1 1 auto;
+        min-width: 180px;
+      "
+      onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 18px rgba(0,0,0,0.2)';"
+      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)';"
+    >
+      What does Lipimo do?
+    </div>
+
+    <!-- Second button -->
+    <div 
+      onclick="window.location.href='y1.html'" 
+      style="
+        background: linear-gradient(135deg, #ffe6f3, #e0ccff);
+        color: black;
+        font-family: Garamond, serif;
+        font-size: 16px;
+        padding: 15px 25px;
+        border-radius: 20px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        flex: 1 1 auto;
+        min-width: 180px;
+      "
+      onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 18px rgba(0,0,0,0.2)';"
+      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)';"
+    >
+      Why should I choose Lipimo?
+    </div>
+
+  </div>
+
+  <div class="grid">
+    <div class="box" onclick="window.location.href='lipimo.html'">Lipimo</div>
+    <div class="box" onclick="window.location.href='page3.html'">Page 3 of your Transformation</div>
+    <div class="box" onclick="window.location.href='page4.html'">Page 4 of your Transformation</div>
+    <div class="box" onclick="window.location.href='page7.html'">Calendar</div>
+    <div class="box" onclick="window.location.href='page8.html'">System Time</div>
+    <div class="box" onclick="window.location.href='pageNext.html'">System Tracker</div>
+    <div class="box" onclick="window.location.href='pageFinal.html'">Amy wang wisdom </div>
+    <div class="box" onclick="window.location.href='Krishnu.html'">Krishna</div>
+  </div>
+
+  <div class="section">
+    <h2>Know more about yourself after using this application.</h2>
+    <p>You'll be resilient, love yourself, stop procrastinating, set systems not goals, and be the dream person you've always dreamed of being! So what are you waiting for? Click on one of these boxes to change! Best of luck!</p>
+  </div>
+
+<div style="
+  font-family: Garamond, serif;
+  color: black;
+  font-size: 20px;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+">
+  <p>
+    To achieve your dream life, we must conquer five of the biggest tasks in achieving so.<br>
+    One, not being able to take action.<br>
+    Two, having the wrong mindset.<br>
+    Three, not being consistent with your systems and good habits.<br>
+    Four, procrastinating.<br>
+    And five, being addicted to social media.<br><br>
+
+    Now, I have divided all of these into your steps.<br>
+    The first step is to take action.<br>
+    The second step is to get your mindset right.<br>
+    The third step is to be consistent.<br>
+    The fourth step is to stop procrastinating.<br>
+    And the fifth step is to not be addicted to social media.<br><br>
+
+    So, go ahead, start your journey.
+  </p>
+</div>
+
+<!-- Big "Your First Step" Button -->
+<button id="firstStepBtn" class="large-step">
+  Your First Step
+  <span class="flower f1">🌸</span>
+  <span class="flower f2">🌸</span>
+  <span class="flower f3">🌸</span>
+  <span class="flower f4">🌸</span>
+  <span class="flower f5">🌸</span>
+</button>
+
+<!-- Big "Your Second Step" Button -->
+<button id="secondStepBtn" class="large-step">
+  Your Second Step
+  <span class="flower s1">🌸</span>
+  <span class="flower s2">🌸</span>
+  <span class="flower s3">🌸</span>
+  <span class="flower s4">🌸</span>
+  <span class="flower s5">🌸</span>
+</button>
+
+<script>
+  document.getElementById("firstStepBtn").addEventListener("click", function() {
+    this.style.transform = "scale(0.95)";
+    setTimeout(() => { 
+      window.location.href = "righttrack.html"; 
+    }, 150); 
+  });
+
+  document.getElementById("secondStepBtn").addEventListener("click", function() {
+    this.style.transform = "scale(0.95)";
+    setTimeout(() => { 
+      window.location.href = "second-step.html"; 
+    }, 150); 
+  });
+</script>
+
+<!-- Big "Your Third Step" Button -->
+<button id="thirdStepBtn" class="large-step">
+  Your Third Step
+  <span class="flower t1">🌸</span>
+  <span class="flower t2">🌸</span>
+  <span class="flower t3">🌸</span>
+  <span class="flower t4">🌸</span>
+  <span class="flower t5">🌸</span>
+</button>
+
+<script>
+  // Third Step button click
+  document.getElementById("thirdStepBtn").addEventListener("click", function() {
+    this.style.transform = "scale(0.95)";
+    setTimeout(() => { 
+      window.location.href = "third_step.html"; // link to the third step page
+    }, 150); 
+  });
+</script>
+
+<style>
+  /* Floating flowers for third button */
+  #thirdStepBtn .t1 { top: 10%; left: 15%; animation-delay: 0s; }
+  #thirdStepBtn .t2 { top: 20%; left: 70%; animation-delay: 1s; }
+  #thirdStepBtn .t3 { top: 60%; left: 25%; animation-delay: 2s; }
+  #thirdStepBtn .t4 { top: 50%; left: 80%; animation-delay: 3s; }
+  #thirdStepBtn .t5 { top: 75%; left: 40%; animation-delay: 4s; }
+</style>
+
+<!-- Big "Your Fourth Step" Button -->
+<button id="fourthStepBtn" class="large-step">
+  Your Fourth Step
+  <span class="flower f1">🌸</span>
+  <span class="flower f2">🌸</span>
+  <span class="flower f3">🌸</span>
+  <span class="flower f4">🌸</span>
+  <span class="flower f5">🌸</span>
+</button>
+
+<script>
+  document.getElementById("fourthStepBtn").addEventListener("click", function() {
+    this.style.transform = "scale(0.95)";
+    setTimeout(() => { 
+      window.location.href = "fourth_step.html"; 
+    }, 150); 
+  });
+</script>
+
+<!-- Big "Your Fifth Step" Button -->
+<button id="fifthStepBtn" class="large-step">
+  Your Fifth Step
+  <span class="flower t1">🌸</span>
+  <span class="flower t2">🌸</span>
+  <span class="flower t3">🌸</span>
+  <span class="flower t4">🌸</span>
+  <span class="flower t5">🌸</span>
+</button>
+
+<script>
+  // Fifth Step button click
+  document.getElementById("fifthStepBtn").addEventListener("click", function() {
+    this.style.transform = "scale(0.95)";
+    setTimeout(() => { 
+      window.location.href = "fifth_step.html"; // link to the fifth step page
+    }, 150); 
+  });
+</script>
+
+<style>
+  /* Floating flowers for fifth button */
+  #fifthStepBtn .t1 { top: 10%; left: 15%; animation-delay: 0s; }
+  #fifthStepBtn .t2 { top: 20%; left: 70%; animation-delay: 1s; }
+  #fifthStepBtn .t3 { top: 60%; left: 25%; animation-delay: 2s; }
+  #fifthStepBtn .t4 { top: 50%; left: 80%; animation-delay: 3s; }
+  #fifthStepBtn .t5 { top: 75%; left: 40%; animation-delay: 4s; }
+</style>
+<!-- Paste this where you want the box in your <body> -->
+<style>
+ 
+
+
+/* Cute/compact styles for the recommendations box + modal */
+.rec-box {
+  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+  color: black;
+  font-family: Garamond, serif;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  max-width: 640px;
+  margin: 20px auto;
+  text-align: center;
+}
+.rec-box h2 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  color: #222;
+}
+.rec-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.rec-btn {
+  background: linear-gradient(135deg, #fff1f7, #f3e8ff);
+  color: black;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.rec-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 18px rgba(0,0,0,0.12); }
+
+/* Modal overlay + content */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;            /* shown when .open is added */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  z-index: 9999;
+  padding: 20px;
+}
+.modal.open { display: flex; }
+
+.modal-content {
+  background: linear-gradient(135deg, #fffafc, #f7f0ff);
+  color: black;
+  font-family: Garamond, serif;
+  padding: 18px;
+  border-radius: 14px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.modal-content h3 { margin: 0 0 12px; text-align: center; }
+.modal-content ul { margin: 0 0 12px 20px; line-height: 1.6; }
+.modal-close {
+  display:inline-block;
+  margin: 0 auto;
+  padding: 8px 14px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+}
+
+/* Small screens */
+@media (max-width:480px) {
+  .rec-box { padding: 16px; }
+  .rec-btn { padding: 10px 14px; font-size: 15px; }
+  .modal-content { padding: 14px; }
+}
+</style>
+
+<div class="rec-box" aria-hidden="false">
+  <h2>✨ More Guidance for You ✨</h2>
+  <div class="rec-buttons">
+    <button class="rec-btn" data-type="books" type="button">📚 Recommended Books</button>
+    <button class="rec-btn" data-type="youtubers" type="button">🎥 Recommended YouTubers</button>
+  </div>
+</div>
+
+<!-- Modal (hidden by default) -->
+<div id="rec-modal" class="modal" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h3 id="modal-title"></h3>
+    <ul id="modal-list"></ul>
+    <div style="text-align:center;">
+      <button id="modal-close" class="modal-close" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  // Data (accurate / fixed titles where appropriate)
+  const books = [
+    "Atomic Habits — James Clear",
+    "The Power of Your Subconscious Mind — Joseph Murphy",
+    "The Power of Habit — Charles Duhigg",
+    "Mindset — Carol S. Dweck",
+    "The 7 Habits of Highly Effective People — Stephen R. Covey"
+  ];
+  const youtubers = [
+    "Amy Wang — for good grades & the right mindset",
+    "Gohar's Guide — for getting good grades",
+    "Lily Sabri — for fitness (abs)",
+    "Mia Yilin — motivation to study"
+  ];
+
+  const modal = document.getElementById('rec-modal');
+  const titleEl = document.getElementById('modal-title');
+  const listEl = document.getElementById('modal-list');
+  const closeBtn = document.getElementById('modal-close');
+
+  // attach events to buttons
+  document.querySelectorAll('.rec-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.type;
+      listEl.innerHTML = '';
+      if (type === 'books') {
+        titleEl.textContent = '📚 Recommended Books';
+        books.forEach(it => {
+          const li = document.createElement('li');
+          li.textContent = it;
+          listEl.appendChild(li);
+        });
+      } else {
+        titleEl.textContent = '🎥 Recommended YouTubers';
+        youtubers.forEach(it => {
+          const li = document.createElement('li');
+          li.textContent = it;
+          listEl.appendChild(li);
+        });
+      }
+      openModal();
+    });
+  });
+
+  function openModal() {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    // focus close for keyboard users
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  // close interactions
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    // close when clicking outside the modal-content
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+})();
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magical Live Reviews</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff0f8;
+    text-align: center;
+    padding: 50px;
+  }
+
+  /* Review Button */
+  #reviewBtn {
+    padding: 20px 50px;
+    background: linear-gradient(135deg, #ffc1e3, #d9b3ff);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  #reviewBtn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  }
+
+  /* Popup Form */
+  #popupForm {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #ffe6f0, #e6e0ff);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    z-index: 1000;
+    width: 90%;
+    max-width: 400px;
+  }
+
+  #popupForm input, #popupForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  #popupForm button {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #ffc1e3, #d9b3ff);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  /* Reviews Section */
+  #reviewsSection {
+    width: 90%;
+    max-width: 800px;
+    margin: 60px auto 0 auto;
+    padding: 20px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ffe6f0, #e6e0ff);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: left;
+  }
+
+  .review {
+    background: white;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+</style>
+</head>
+<body>
+
+<!-- Review Button -->
+<button id="reviewBtn">Review</button>
+
+<!-- Popup Form -->
+<div id="popupForm">
+  <h2 style="color:#7a2fa0; margin-bottom:15px;">💖 Leave a Review 💖</h2>
+  <input type="text" id="nameInput" placeholder="Your name" required>
+  <textarea id="reviewInput" placeholder="Your review..." rows="4" required></textarea>
+  <br>
+  <button onclick="submitReview()">Submit</button>
+</div>
+
+<!-- Reviews Section -->
+<div id="reviewsSection">
+  <h2 style="color:#7a2fa0; text-align:center;">💖 User Reviews 💖</h2>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+<script>
+  // Your Firebase config here
+  const firebaseConfig = {
+    apiKey: "YOUR_FIREBASE_CONFIG_HERE",
+    authDomain: "YOUR_FIREBASE_CONFIG_HERE",
+    databaseURL: "YOUR_FIREBASE_CONFIG_HERE",
+    projectId: "YOUR_FIREBASE_CONFIG_HERE",
+    storageBucket: "YOUR_FIREBASE_CONFIG_HERE",
+    messagingSenderId: "YOUR_FIREBASE_CONFIG_HERE",
+    appId: "YOUR_FIREBASE_CONFIG_HERE"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const reviewBtn = document.getElementById('reviewBtn');
+  const popupForm = document.getElementById('popupForm');
+  const reviewsSection = document.getElementById('reviewsSection');
+
+  // Show popup
+  reviewBtn.onclick = () => { popupForm.style.display = 'block'; }
+
+  // Submit review
+  function submitReview() {
+    const name = document.getElementById('nameInput').value.trim();
+    const review = document.getElementById('reviewInput').value.trim();
+    if (!name || !review) return alert("Please fill both fields!");
+
+    const newReview = { name, review, timestamp: Date.now() };
+    db.ref('reviews').push(newReview);
+
+    // Clear form and hide
+    document.getElementById('nameInput').value = '';
+    document.getElementById('reviewInput').value = '';
+    popupForm.style.display = 'none';
+  }
+
+  // Load reviews live
+  db.ref('reviews').on('child_added', snapshot => {
+    const r = snapshot.val();
+    const div = document.createElement('div');
+    div.className = 'review';
+    div.innerHTML = `<strong>${r.name}</strong><p>${r.review}</p>`;
+    reviewsSection.appendChild(div);
+  });
+</script>
+
+</body>
+</html>
+
+</body>
+</html>
