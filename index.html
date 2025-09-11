@@ -652,77 +652,10 @@
 </head>
 <body>
 
-<!-- Review Button -->
-<button id="reviewBtn">Review</button>
-
-<!-- Popup Form -->
-<div id="popupForm">
-  <h2 style="color:#7a2fa0; margin-bottom:15px;">💖 Leave a Review 💖</h2>
-  <input type="text" id="nameInput" placeholder="Your name" required>
-  <textarea id="reviewInput" placeholder="Your review..." rows="4" required></textarea>
-  <br>
-  <button onclick="submitReview()">Submit</button>
-</div>
-
-<!-- Reviews Section -->
-<div id="reviewsSection">
-  <h2 style="color:#7a2fa0; text-align:center;">💖 User Reviews 💖</h2>
-</div>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
-<script>
-  // Your Firebase config here
-  const firebaseConfig = {
-    apiKey: "YOUR_FIREBASE_CONFIG_HERE",
-    authDomain: "YOUR_FIREBASE_CONFIG_HERE",
-    databaseURL: "YOUR_FIREBASE_CONFIG_HERE",
-    projectId: "YOUR_FIREBASE_CONFIG_HERE",
-    storageBucket: "YOUR_FIREBASE_CONFIG_HERE",
-    messagingSenderId: "YOUR_FIREBASE_CONFIG_HERE",
-    appId: "YOUR_FIREBASE_CONFIG_HERE"
-  };
-
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  const reviewBtn = document.getElementById('reviewBtn');
-  const popupForm = document.getElementById('popupForm');
-  const reviewsSection = document.getElementById('reviewsSection');
-
-  // Show popup
-  reviewBtn.onclick = () => { popupForm.style.display = 'block'; }
-
-  // Submit review
-  function submitReview() {
-    const name = document.getElementById('nameInput').value.trim();
-    const review = document.getElementById('reviewInput').value.trim();
-    if (!name || !review) return alert("Please fill both fields!");
-
-    const newReview = { name, review, timestamp: Date.now() };
-    db.ref('reviews').push(newReview);
-
-    // Clear form and hide
-    document.getElementById('nameInput').value = '';
-    document.getElementById('reviewInput').value = '';
-    popupForm.style.display = 'none';
-  }
-
-  // Load reviews live
-  db.ref('reviews').on('child_added', snapshot => {
-    const r = snapshot.val();
-    const div = document.createElement('div');
-    div.className = 'review';
-    div.innerHTML = `<strong>${r.name}</strong><p>${r.review}</p>`;
-    reviewsSection.appendChild(div);
-  });
-</script>
 
 </body>
 </html>
 
 </body>
 </html>
+
