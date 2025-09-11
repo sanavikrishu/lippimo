@@ -561,8 +561,31 @@
     if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 })();
+<a href="feedback.html" class="pastelReviewButton">Review</a>
+
+<style>
+  .pastelReviewButton {
+    display: inline-block;
+    padding: 18px 36px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Garamond, serif;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ffd6eb, #e6ccff);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .pastelReviewButton:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+  }
+</style>
 
 
 </body>
 </html>
+
 
