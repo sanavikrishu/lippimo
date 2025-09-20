@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lipimo - Home Page</title>
+  <title>Lipimo Home Page</title>
   <style>
 /* Mobile responsiveness */
 @media (max-width: 600px) {
@@ -591,10 +591,7 @@ function openReviewForm() {
   <div style="text-align:center; margin-top:20px;">
   <button onclick="window.location.href='login.html'" 
           style="background:#c9a6ff; border:none; padding:10px 20px; border-radius:12px; cursor:pointer;">
-    Login
-  </button>
-</div>
-  <!-- Profile Circle Snippet -->
+    <!-- Profile Circle Snippet -->
 <div class="top-bar">
   <div class="profile-container">
     <img id="profileImg" class="profile-circle" src="default-profile.png" alt="Profile Photo">
@@ -611,7 +608,7 @@ function openReviewForm() {
 .profile-container { position:relative; }
 .profile-circle { width:50px; height:50px; border-radius:50%; border:2px solid #ccc; object-fit:cover; cursor:pointer; transition:0.3s; }
 .profile-circle:hover { border-color:#888; }
-.profile-menu { position:absolute; top:60px; right:0; background:#fff; border:1px solid #ccc; border-radius:8px; padding:10px; width:150px; box-shadow:0 3px 10px rgba(0,0,0,0.1); text-align:center; }
+.profile-menu { position:absolute; top:60px; right:0; background:#fff; border:1px solid #ccc; border-radius:8px; padding:10px; width:180px; box-shadow:0 3px 10px rgba(0,0,0,0.1); text-align:center; }
 .profile-menu p { margin:5px 0; font-size:14px; word-break:break-all; }
 .profile-menu button { margin-top:5px; padding:5px 10px; border:none; background:#007bff; color:#fff; border-radius:4px; cursor:pointer; }
 .profile-menu button:hover { background:#0056b3; }
@@ -622,7 +619,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-storage.js";
 
-// 🔹 Your Firebase config
+// 🔹 Firebase config
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_AUTH_DOMAIN",
@@ -636,21 +633,31 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const storage = getStorage();
 
+// Elements
 const profileImg = document.getElementById('profileImg');
 const profileMenu = document.getElementById('profileMenu');
 const fileInput = document.getElementById('fileInput');
 const userEmail = document.getElementById('userEmail');
 const editBtn = document.getElementById('editProfileBtn');
 
-// Show/Hide menu
+// Show/hide menu on click
 profileImg.addEventListener('click', () => {
   profileMenu.style.display = profileMenu.style.display === 'none' ? 'block' : 'none';
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.profile-container')) {
+    profileMenu.style.display = 'none';
+  }
 });
 
 // Go to edit page
 editBtn.addEventListener('click', () => window.location.href = 'edit.html');
 
-// Change photo
+// Change profile photo on double-click
+profileImg.addEventListener('dblclick', () => fileInput.click());
+
 fileInput.addEventListener('change', async (event) => {
   const user = auth.currentUser;
   if (!user) return alert("You must be logged in!");
@@ -668,25 +675,11 @@ fileInput.addEventListener('change', async (event) => {
 // Load user info
 onAuthStateChanged(auth, user => {
   if (user) {
-    userEmail.textContent = user.email;
+    userEmail.textContent = user.email; // show Gmail/email in menu
     const storageRef = ref(storage, `profilePhotos/${user.uid}.jpg`);
     getDownloadURL(storageRef).then(url => { profileImg.src = url; }).catch(()=>{});
-    // Click profile image to change photo
-    profileImg.addEventListener('dblclick', () => fileInput.click());
   }
 });
 </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
