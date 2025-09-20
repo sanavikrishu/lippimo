@@ -2,52 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lipimo Home Page</title>
+  <title>Lipimo - Home Page</title>
   <style>
-/* Mobile responsiveness */
-@media (max-width: 600px) {
-  .container {
-    width: 95%;
-    padding: 10px;
-  }
-
-  .scrolling-tips, .reflection {
-    padding: 20px;
-  }
-
-  .scrolling-tips h2, .reflection h2 {
-    font-size: 22px;
-  }
-
-  .scrolling-tips ul li, .reflection label {
-    font-size: 16px;
-  }
-
-  .toggle-btn, .reset-btn, #goBackBtn {
-    padding: 8px 14px;
-    font-size: 16px;
-  }
-
-  .video-section iframe {
-    width: 100%;
-    height: 200px; /* smaller for mobile */
-  }
-
-  .popup {
-    max-width: 90%;
-    padding: 15px;
-  }
-
-  .popup h2 {
-    font-size: 20px;
-  }
-
-  .popup button {
-    padding: 6px 12px;
-    font-size: 14px;
-  }
-}
-
     body {
       font-family: Garamond, serif;
       margin: 0;
@@ -57,627 +13,124 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    h1 {
-      margin: 30px 0;
-      font-size: 36px;
-      color: #444;
-      text-align: center;
-    }
+    h1 { margin: 30px 0; font-size: 36px; color: #444; text-align: center; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 20px;
-      width: 80%;
-      max-width: 1000px;
-      margin-bottom: 60px;
-    }
+    /* Profile circle and menu */
+    .top-bar { display:flex; justify-content:flex-end; width: 100%; padding:10px 20px; background:#fefefe; box-shadow:0 1px 5px rgba(0,0,0,0.1); }
+    .profile-container { position:relative; }
+    .profile-circle { width:50px; height:50px; border-radius:50%; border:2px solid #ccc; object-fit:cover; cursor:pointer; transition:0.3s; }
+    .profile-circle:hover { border-color:#888; }
+    .profile-menu { position:absolute; top:60px; right:0; background:#fff; border:1px solid #ccc; border-radius:8px; padding:10px; width:180px; box-shadow:0 3px 10px rgba(0,0,0,0.1); text-align:center; display:none; }
+    .profile-menu p { margin:5px 0; font-size:14px; word-break:break-all; }
+    .profile-menu button { margin-top:5px; padding:5px 10px; border:none; background:#007bff; color:#fff; border-radius:4px; cursor:pointer; }
+    .profile-menu button:hover { background:#0056b3; }
 
-
-    .box {
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      color: #444;
-      background: linear-gradient(135deg, #ffe6f0, #e6f0ff);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .section {
-      width: 80%;
-      max-width: 800px;
-      background: #fff;
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      font-size: 20px;
-      color: #333;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 40px;
-    }
-
-
-    /* Shared big button style */
-    .large-step {
-      position: relative;
-      width: 500px;
-      height: 150px;
-      font-size: 36px;
-      font-weight: bold;
-      color: white;
-      background: linear-gradient(135deg, #d8b4e2, #e8c9f0);
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-      margin: 30px 0;
-      overflow: hidden;
-    }
-
-    .large-step:hover {
-      transform: scale(1.05);
-      box-shadow: 0 14px 30px rgba(0,0,0,0.25);
-      background: linear-gradient(135deg, #c193d4, #d2a8ea);
-    }
-
-    /* Floating flowers */
-    .flower {
-      position: absolute;
-      font-size: 28px;
-      opacity: 0.8;
-      animation: float 6s infinite ease-in-out;
-      pointer-events: none;
-    }
-
-    /* First button flowers */
-    #firstStepBtn .f1 { top: 10%; left: 15%; animation-delay: 0s; }
-    #firstStepBtn .f2 { top: 20%; left: 70%; animation-delay: 1s; }
-    #firstStepBtn .f3 { top: 60%; left: 25%; animation-delay: 2s; }
-    #firstStepBtn .f4 { top: 50%; left: 80%; animation-delay: 3s; }
-    #firstStepBtn .f5 { top: 75%; left: 40%; animation-delay: 4s; }
-
-    /* Second button flowers */
-    #secondStepBtn .s1 { top: 12%; left: 10%; animation-delay: 0s; }
-    #secondStepBtn .s2 { top: 18%; right: 15%; animation-delay: 1s; }
-    #secondStepBtn .s3 { top: 55%; left: 22%; animation-delay: 2s; }
-    #secondStepBtn .s4 { top: 48%; right: 18%; animation-delay: 3s; }
-    #secondStepBtn .s5 { bottom: 15%; left: 60%; animation-delay: 4s; }
-
-    @keyframes float {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(15deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
-    }
+    /* Login/Logout buttons styling */
+    .auth-buttons { margin: 10px; display:flex; gap:10px; }
+    .auth-btn { background: linear-gradient(135deg, #c9a6ff, #a18aff); color:white; border:none; padding:10px 20px; border-radius:12px; cursor:pointer; font-size:16px; transition:0.2s; }
+    .auth-btn:hover { transform: translateY(-2px); box-shadow:0 6px 12px rgba(0,0,0,0.2); }
   </style>
 </head>
 <body>
 
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="profile-container">
+      <img id="profileImg" class="profile-circle" src="default-profile.png" alt="Profile Photo">
+      <div id="profileMenu" class="profile-menu">
+        <p id="userEmail">user@example.com</p>
+        <button id="editProfileBtn">Edit Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login / Logout -->
+  <div class="auth-buttons">
+    <button id="loginBtn" class="auth-btn">Login</button>
+    <button id="logoutBtn" class="auth-btn">Logout</button>
+  </div>
+
+  <!-- Example content -->
   <h1>Home Page of Lipimo</h1>
-<h4> ONLY FREE FOR THE FIRST 100 USERS</h4>
 
-  <!-- TOP BUTTONS WRAPPED IN FLEX -->
-  <div style="
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px auto;
-    max-width: 800px;
-    flex-wrap: wrap;
-  ">
+  <!-- Your existing buttons/grid content can go here -->
 
-    <!-- First button -->
-    <div 
-      onclick="window.location.href='y.html'" 
-      style="
-        background: linear-gradient(135deg, #ffd6eb, #e6ccff);
-        color: black;
-        font-family: Garamond, serif;
-        font-size: 16px;
-        padding: 15px 25px;
-        border-radius: 20px;
-        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        text-align: center;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-        flex: 1 1 auto;
-        min-width: 180px;
-      "
-      onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 18px rgba(0,0,0,0.2)';"
-      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)';"
-    >
-      What does Lipimo do?
-    </div>
+  <!-- Firebase scripts -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-storage.js";
 
-    <!-- Second button -->
-    <div 
-      onclick="window.location.href='y1.html'" 
-      style="
-        background: linear-gradient(135deg, #ffe6f3, #e0ccff);
-        color: black;
-        font-family: Garamond, serif;
-        font-size: 16px;
-        padding: 15px 25px;
-        border-radius: 20px;
-        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        text-align: center;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-        flex: 1 1 auto;
-        min-width: 180px;
-      "
-      onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 18px rgba(0,0,0,0.2)';"
-      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)';"
-    >
-      Why should I choose Lipimo?
-    </div>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MSG_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
 
-  </div>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const storage = getStorage();
 
-  <div class="grid">
-    <div class="box" onclick="window.location.href='lipimo.html'">Lipimo</div>
-    <div class="box" onclick="window.location.href='page3.html'">Page 3 of your Transformation</div>
-    <div class="box" onclick="window.location.href='page4.html'">Page 4 of your Transformation</div>
-    <div class="box" onclick="window.location.href='page7.html'">Calendar</div>
-    <div class="box" onclick="window.location.href='page8.html'">System Time</div>
-    <div class="box" onclick="window.location.href='pageNext.html'">System Tracker</div>
-    <div class="box" onclick="window.location.href='pageFinal.html'">Amy wang wisdom </div>
-    <div class="box" onclick="window.location.href='Krishnu.html'">Krishna</div>
-  </div>
+    const profileImg = document.getElementById('profileImg');
+    const profileMenu = document.getElementById('profileMenu');
+    const userEmail = document.getElementById('userEmail');
+    const editBtn = document.getElementById('editProfileBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-  <div class="section">
-    <h2>Know more about yourself after using this application.</h2>
-    <p>You'll be resilient, love yourself, stop procrastinating, set systems not goals, and be the dream person you've always dreamed of being! So what are you waiting for? Click on one of these boxes to change! Best of luck!</p>
-  </div>
-
-<div style="
-  font-family: Garamond, serif;
-  color: black;
-  font-size: 20px;
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-">
-  <p>
-    To achieve your dream life, we must conquer five of the biggest tasks in achieving so.<br>
-    One, not being able to take action.<br>
-    Two, having the wrong mindset.<br>
-    Three, not being consistent with your systems and good habits.<br>
-    Four, procrastinating.<br>
-    And five, being addicted to social media.<br><br>
-
-    Now, I have divided all of these into your steps.<br>
-    The first step is to take action.<br>
-    The second step is to get your mindset right.<br>
-    The third step is to be consistent.<br>
-    The fourth step is to stop procrastinating.<br>
-    And the fifth step is to not be addicted to social media.<br><br>
-
-    So, go ahead, start your journey.
-  </p>
-</div>
-
-<!-- Big "Your First Step" Button -->
-<button id="firstStepBtn" class="large-step">
-  Your First Step
-  <span class="flower f1">🌸</span>
-  <span class="flower f2">🌸</span>
-  <span class="flower f3">🌸</span>
-  <span class="flower f4">🌸</span>
-  <span class="flower f5">🌸</span>
-</button>
-
-<!-- Big "Your Second Step" Button -->
-<button id="secondStepBtn" class="large-step">
-  Your Second Step
-  <span class="flower s1">🌸</span>
-  <span class="flower s2">🌸</span>
-  <span class="flower s3">🌸</span>
-  <span class="flower s4">🌸</span>
-  <span class="flower s5">🌸</span>
-</button>
-
-<script>
-  document.getElementById("firstStepBtn").addEventListener("click", function() {
-    this.style.transform = "scale(0.95)";
-    setTimeout(() => { 
-      window.location.href = "righttrack.html"; 
-    }, 150); 
-  });
-
-  document.getElementById("secondStepBtn").addEventListener("click", function() {
-    this.style.transform = "scale(0.95)";
-    setTimeout(() => { 
-      window.location.href = "second-step.html"; 
-    }, 150); 
-  });
-</script>
-
-<!-- Big "Your Third Step" Button -->
-<button id="thirdStepBtn" class="large-step">
-  Your Third Step
-  <span class="flower t1">🌸</span>
-  <span class="flower t2">🌸</span>
-  <span class="flower t3">🌸</span>
-  <span class="flower t4">🌸</span>
-  <span class="flower t5">🌸</span>
-</button>
-
-<script>
-  // Third Step button click
-  document.getElementById("thirdStepBtn").addEventListener("click", function() {
-    this.style.transform = "scale(0.95)";
-    setTimeout(() => { 
-      window.location.href = "third_step.html"; // link to the third step page
-    }, 150); 
-  });
-</script>
-
-<style>
-  /* Floating flowers for third button */
-  #thirdStepBtn .t1 { top: 10%; left: 15%; animation-delay: 0s; }
-  #thirdStepBtn .t2 { top: 20%; left: 70%; animation-delay: 1s; }
-  #thirdStepBtn .t3 { top: 60%; left: 25%; animation-delay: 2s; }
-  #thirdStepBtn .t4 { top: 50%; left: 80%; animation-delay: 3s; }
-  #thirdStepBtn .t5 { top: 75%; left: 40%; animation-delay: 4s; }
-</style>
-
-<!-- Big "Your Fourth Step" Button -->
-<button id="fourthStepBtn" class="large-step">
-  Your Fourth Step
-  <span class="flower f1">🌸</span>
-  <span class="flower f2">🌸</span>
-  <span class="flower f3">🌸</span>
-  <span class="flower f4">🌸</span>
-  <span class="flower f5">🌸</span>
-</button>
-
-<script>
-  document.getElementById("fourthStepBtn").addEventListener("click", function() {
-    this.style.transform = "scale(0.95)";
-    setTimeout(() => { 
-      window.location.href = "fourth_step.html"; 
-    }, 150); 
-  });
-</script>
-
-<!-- Big "Your Fifth Step" Button -->
-<button id="fifthStepBtn" class="large-step">
-  Your Fifth Step
-  <span class="flower t1">🌸</span>
-  <span class="flower t2">🌸</span>
-  <span class="flower t3">🌸</span>
-  <span class="flower t4">🌸</span>
-  <span class="flower t5">🌸</span>
-</button>
-
-<script>
-  // Fifth Step button click
-  document.getElementById("fifthStepBtn").addEventListener("click", function() {
-    this.style.transform = "scale(0.95)";
-    setTimeout(() => { 
-      window.location.href = "fifth_step.html"; // link to the fifth step page
-    }, 150); 
-  });
-</script>
-
-<style>
-  /* Floating flowers for fifth button */
-  #fifthStepBtn .t1 { top: 10%; left: 15%; animation-delay: 0s; }
-  #fifthStepBtn .t2 { top: 20%; left: 70%; animation-delay: 1s; }
-  #fifthStepBtn .t3 { top: 60%; left: 25%; animation-delay: 2s; }
-  #fifthStepBtn .t4 { top: 50%; left: 80%; animation-delay: 3s; }
-  #fifthStepBtn .t5 { top: 75%; left: 40%; animation-delay: 4s; }
-</style>
-<!-- Paste this where you want the box in your <body> -->
-<style>
- 
-
-
-/* Cute/compact styles for the recommendations box + modal */
-.rec-box {
-  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
-  color: black;
-  font-family: Garamond, serif;
-  padding: 22px;
-  border-radius: 18px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  max-width: 640px;
-  margin: 20px auto;
-  text-align: center;
-}
-.rec-box h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
-  color: #222;
-}
-.rec-buttons {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-.rec-btn {
-  background: linear-gradient(135deg, #fff1f7, #f3e8ff);
-  color: black;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 14px;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-  transition: transform .16s ease, box-shadow .16s ease;
-}
-.rec-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 18px rgba(0,0,0,0.12); }
-
-/* Modal overlay + content */
-.modal {
-  position: fixed;
-  inset: 0;
-  display: none;            /* shown when .open is added */
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.45);
-  z-index: 9999;
-  padding: 20px;
-}
-.modal.open { display: flex; }
-
-.modal-content {
-  background: linear-gradient(135deg, #fffafc, #f7f0ff);
-  color: black;
-  font-family: Garamond, serif;
-  padding: 18px;
-  border-radius: 14px;
-  max-width: 520px;
-  width: 100%;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-.modal-content h3 { margin: 0 0 12px; text-align: center; }
-.modal-content ul { margin: 0 0 12px 20px; line-height: 1.6; }
-.modal-close {
-  display:inline-block;
-  margin: 0 auto;
-  padding: 8px 14px;
-  cursor: pointer;
-  background: linear-gradient(135deg, #ffd6eb, #e6ccff);
-  border: none;
-  border-radius: 12px;
-  font-size: 15px;
-}
-
-/* Small screens */
-@media (max-width:480px) {
-  .rec-box { padding: 16px; }
-  .rec-btn { padding: 10px 14px; font-size: 15px; }
-  .modal-content { padding: 14px; }
-}
-</style>
-
-<div class="rec-box" aria-hidden="false">
-  <h2>✨ More Guidance for You ✨</h2>
-  <div class="rec-buttons">
-    <button class="rec-btn" data-type="books" type="button">📚 Recommended Books</button>
-    <button class="rec-btn" data-type="youtubers" type="button">🎥 Recommended YouTubers</button>
-  </div>
-</div>
-
-<!-- Modal (hidden by default) -->
-<div id="rec-modal" class="modal" aria-hidden="true">
-  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <h3 id="modal-title"></h3>
-    <ul id="modal-list"></ul>
-    <div style="text-align:center;">
-      <button id="modal-close" class="modal-close" type="button">Close</button>
-    </div>
-  </div>
-</div>
-
-<script>
-(function () {
-  // Data (accurate / fixed titles where appropriate)
-  const books = [
-    "Atomic Habits — James Clear",
-    "The Power of Your Subconscious Mind — Joseph Murphy",
-    "The Power of Habit — Charles Duhigg",
-    "Mindset — Carol S. Dweck",
-    "The 7 Habits of Highly Effective People — Stephen R. Covey"
-  ];
-  const youtubers = [
-    "Amy Wang — for good grades & the right mindset",
-    "Gohar's Guide — for getting good grades",
-    "Lily Sabri — for fitness (abs)",
-    "Mia Yilin — motivation to study"
-  ];
-
-  const modal = document.getElementById('rec-modal');
-  const titleEl = document.getElementById('modal-title');
-  const listEl = document.getElementById('modal-list');
-  const closeBtn = document.getElementById('modal-close');
-
-  // attach events to buttons
-  document.querySelectorAll('.rec-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const type = btn.dataset.type;
-      listEl.innerHTML = '';
-      if (type === 'books') {
-        titleEl.textContent = '📚 Recommended Books';
-        books.forEach(it => {
-          const li = document.createElement('li');
-          li.textContent = it;
-          listEl.appendChild(li);
-        });
-      } else {
-        titleEl.textContent = '🎥 Recommended YouTubers';
-        youtubers.forEach(it => {
-          const li = document.createElement('li');
-          li.textContent = it;
-          listEl.appendChild(li);
-        });
-      }
-      openModal();
+    // Show/hide profile menu
+    profileImg.addEventListener('click', () => {
+      profileMenu.style.display = profileMenu.style.display === 'none' ? 'block' : 'none';
     });
-  });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.profile-container')) profileMenu.style.display = 'none';
+    });
 
-  function openModal() {
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-    // focus close for keyboard users
-    closeBtn.focus();
-  }
+    // Edit profile page
+    editBtn.addEventListener('click', () => window.location.href = 'edit.html');
 
-  function closeModal() {
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-  }
+    // Login button
+    loginBtn.addEventListener('click', async () => {
+      const email = prompt("Enter your email:");
+      const password = prompt("Enter your password:");
+      if (!email || !password) return alert("Email and password required!");
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Logged in successfully!");
+      } catch(err) { alert(err.message); }
+    });
 
-  // close interactions
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    // close when clicking outside the modal-content
-    if (e.target === modal) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-  });
-})();
-</script>
-<!-- Big Aesthetic Review Button -->
-<button onclick="openReviewForm()" 
-        style="
-            padding: 20px 50px;
-            background: linear-gradient(135deg, #ffc1e3, #d9b3ff);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 22px;
-            font-weight: 600;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            transition: transform 0.2s, box-shadow 0.2s;
-        "
-        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.2)';"
-        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)';"
->
-  Review
-</button>
+    // Logout button
+    logoutBtn.addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        alert("Logged out!");
+        profileImg.src = "default-profile.png";
+        userEmail.textContent = "user@example.com";
+      } catch(err) { alert(err.message); }
+    });
 
-<script>
-function openReviewForm() {
-  window.open("https://docs.google.com/forms/d/e/1FAIpQLScfoENh9WmsKkXwlbJTUNk2qUXkIRYGeM1W9qTrrHP2-fDBIQ/viewform?usp=dialog", "_blank");
-}
-</script>
-  <div style="text-align:center; margin-top:20px;">
-  <button onclick="window.location.href='login.html'" 
-          style="background:#c9a6ff; border:none; padding:10px 20px; border-radius:12px; cursor:pointer;">
-    <!-- Profile Circle Snippet -->
-<div class="top-bar">
-  <div class="profile-container">
-    <img id="profileImg" class="profile-circle" src="default-profile.png" alt="Profile Photo">
-    <div id="profileMenu" class="profile-menu" style="display:none;">
-      <p id="userEmail">user@example.com</p>
-      <button id="editProfileBtn">Edit Profile</button>
-    </div>
-    <input type="file" id="fileInput" accept="image/*" style="display:none">
-  </div>
-</div>
+    // Load user info real-time
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        userEmail.textContent = user.email;
+        const storageRef = ref(storage, `profilePhotos/${user.uid}.jpg`);
+        try {
+          const url = await getDownloadURL(storageRef);
+          profileImg.src = url;
+        } catch { profileImg.src = "default-profile.png"; }
+      } else {
+        profileImg.src = "default-profile.png";
+        userEmail.textContent = "user@example.com";
+      }
+    });
 
-<style>
-.top-bar { display:flex; justify-content:flex-end; padding:10px 20px; background:#fefefe; box-shadow:0 1px 5px rgba(0,0,0,0.1); }
-.profile-container { position:relative; }
-.profile-circle { width:50px; height:50px; border-radius:50%; border:2px solid #ccc; object-fit:cover; cursor:pointer; transition:0.3s; }
-.profile-circle:hover { border-color:#888; }
-.profile-menu { position:absolute; top:60px; right:0; background:#fff; border:1px solid #ccc; border-radius:8px; padding:10px; width:180px; box-shadow:0 3px 10px rgba(0,0,0,0.1); text-align:center; }
-.profile-menu p { margin:5px 0; font-size:14px; word-break:break-all; }
-.profile-menu button { margin-top:5px; padding:5px 10px; border:none; background:#007bff; color:#fff; border-radius:4px; cursor:pointer; }
-.profile-menu button:hover { background:#0056b3; }
-</style>
+  </script>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-storage.js";
-
-// 🔹 Firebase config
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MSG_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const storage = getStorage();
-
-// Elements
-const profileImg = document.getElementById('profileImg');
-const profileMenu = document.getElementById('profileMenu');
-const fileInput = document.getElementById('fileInput');
-const userEmail = document.getElementById('userEmail');
-const editBtn = document.getElementById('editProfileBtn');
-
-// Show/hide menu on click
-profileImg.addEventListener('click', () => {
-  profileMenu.style.display = profileMenu.style.display === 'none' ? 'block' : 'none';
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.profile-container')) {
-    profileMenu.style.display = 'none';
-  }
-});
-
-// Go to edit page
-editBtn.addEventListener('click', () => window.location.href = 'edit.html');
-
-// Change profile photo on double-click
-profileImg.addEventListener('dblclick', () => fileInput.click());
-
-fileInput.addEventListener('change', async (event) => {
-  const user = auth.currentUser;
-  if (!user) return alert("You must be logged in!");
-  const file = event.target.files[0];
-  if (!file) return;
-  const storageRef = ref(storage, `profilePhotos/${user.uid}.jpg`);
-  try {
-    await uploadBytes(storageRef, file);
-    const url = await getDownloadURL(storageRef);
-    profileImg.src = url;
-    alert("Profile photo updated!");
-  } catch (err) { console.error(err); }
-});
-
-// Load user info
-onAuthStateChanged(auth, user => {
-  if (user) {
-    userEmail.textContent = user.email; // show Gmail/email in menu
-    const storageRef = ref(storage, `profilePhotos/${user.uid}.jpg`);
-    getDownloadURL(storageRef).then(url => { profileImg.src = url; }).catch(()=>{});
-  }
-});
-</script>
 </body>
 </html>
