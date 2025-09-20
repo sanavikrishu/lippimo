@@ -594,9 +594,92 @@ function openReviewForm() {
     Login
   </button>
 </div>
+  <!-- Profile Circle Snippet -->
+<div class="top-bar">
+  <div class="profile-container">
+    <img id="profileImg" class="profile-circle" src="default-profile.png" alt="Profile Photo">
+    <div id="profileMenu" class="profile-menu" style="display:none;">
+      <p id="userEmail">user@example.com</p>
+      <button id="editProfileBtn">Edit Profile</button>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none">
+  </div>
+</div>
+
+<style>
+.top-bar { display:flex; justify-content:flex-end; padding:10px 20px; background:#fefefe; box-shadow:0 1px 5px rgba(0,0,0,0.1); }
+.profile-container { position:relative; }
+.profile-circle { width:50px; height:50px; border-radius:50%; border:2px solid #ccc; object-fit:cover; cursor:pointer; transition:0.3s; }
+.profile-circle:hover { border-color:#888; }
+.profile-menu { position:absolute; top:60px; right:0; background:#fff; border:1px solid #ccc; border-radius:8px; padding:10px; width:150px; box-shadow:0 3px 10px rgba(0,0,0,0.1); text-align:center; }
+.profile-menu p { margin:5px 0; font-size:14px; word-break:break-all; }
+.profile-menu button { margin-top:5px; padding:5px 10px; border:none; background:#007bff; color:#fff; border-radius:4px; cursor:pointer; }
+.profile-menu button:hover { background:#0056b3; }
+</style>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-storage.js";
+
+// 🔹 Your Firebase config
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MSG_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const storage = getStorage();
+
+const profileImg = document.getElementById('profileImg');
+const profileMenu = document.getElementById('profileMenu');
+const fileInput = document.getElementById('fileInput');
+const userEmail = document.getElementById('userEmail');
+const editBtn = document.getElementById('editProfileBtn');
+
+// Show/Hide menu
+profileImg.addEventListener('click', () => {
+  profileMenu.style.display = profileMenu.style.display === 'none' ? 'block' : 'none';
+});
+
+// Go to edit page
+editBtn.addEventListener('click', () => window.location.href = 'edit.html');
+
+// Change photo
+fileInput.addEventListener('change', async (event) => {
+  const user = auth.currentUser;
+  if (!user) return alert("You must be logged in!");
+  const file = event.target.files[0];
+  if (!file) return;
+  const storageRef = ref(storage, `profilePhotos/${user.uid}.jpg`);
+  try {
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    profileImg.src = url;
+    alert("Profile photo updated!");
+  } catch (err) { console.error(err); }
+});
+
+// Load user info
+onAuthStateChanged(auth, user => {
+  if (user) {
+    userEmail.textContent = user.email;
+    const storageRef = ref(storage, `profilePhotos/${user.uid}.jpg`);
+    getDownloadURL(storageRef).then(url => { profileImg.src = url; }).catch(()=>{});
+    // Click profile image to change photo
+    profileImg.addEventListener('dblclick', () => fileInput.click());
+  }
+});
+</script>
 
 </body>
 </html>
+
 
 
 
