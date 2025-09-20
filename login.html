@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pastel Login</title>
+  <style>
+    body {
+      background: #f8f4ff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+    input {
+      width: 70%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+    }
+    button {
+      background: #c9a6ff;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b189f7;
+    }
+    .message {
+      font-size: 0.85rem;
+      margin: 2px 0 8px 0;
+      color: #ff4d6d;
+    }
+    .message.success {
+      color: #4caf50;
+    }
+    .password-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .password-container button {
+      width: 20%;
+      margin: 0 0 0 5px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Welcome Back 💜</h2>
+    <input type="email" id="email" placeholder="Email">
+    <div id="email-msg" class="message"></div>
+
+    <div class="password-container">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="togglePassword()">See</button>
+    </div>
+    <div id="password-msg" class="message"></div>
+
+    <div>
+      <button onclick="signUp()">Sign Up</button>
+      <button onclick="signIn()">Log In</button>
+      <button onclick="signOut()">Log Out</button>
+    </div>
+    <p id="status">Not logged in.</p>
+  </div>
+
+  <!-- Firebase v11 SDK (modular) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB1nsuLRyu9I09n4LWLfgzLVCFGJ4pnQFY",
+      authDomain: "lipimo-d6478.firebaseapp.com",
+      projectId: "lipimo-d6478",
+      storageBucket: "lipimo-d6478.firebasestorage.app",
+      messagingSenderId: "835224609944",
+      appId: "1:835224609944:web:0d471cdfd4a8a21a525ced"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const statusEl = document.getElementById("status");
+    const emailMsg = document.getElementById("email-msg");
+    const passwordMsg = document.getElementById("password-msg");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    function clearMessages() {
+      emailMsg.innerText = "";
+      passwordMsg.innerText = "";
+      statusEl.innerText = "";
+      statusEl.className = "";
+    }
+
+    // Toggle password visibility
+    window.togglePassword = () => {
+      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+    }
+
+    // Sign Up
+    window.signUp = () => {
+      clearMessages();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          statusEl.innerText = "✅ Account created for " + userCredential.user.email;
+          statusEl.className = "message success";
+          emailInput.value = "";
+          passwordInput.value = "";
+          setTimeout(() => { window.location.href = "lipimoHome.html"; }, 1000);
+        })
+        .catch(error => {
+          console.log(error.code, error.message); // DEBUG: check exact error
+          switch(error.code) {
+            case "auth/invalid-email":
+            case "auth/email-already-in-use":
+              emailMsg.innerText = error.message;
+              break;
+            case "auth/weak-password":
+              passwordMsg.innerText = error.message;
+              break;
+            default:
+              statusEl.innerText = error.message;
+          }
+        });
+    }
+
+    // Sign In
+    window.signIn = () => {
+      clearMessages();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          statusEl.innerText = "🎉 Welcome back " + userCredential.user.email;
+          statusEl.className = "message success";
+          emailInput.value = "";
+          passwordInput.value = "";
+          setTimeout(() => { window.location.href = "lipimoHome.html"; }, 1000);
+        })
+        .catch(error => {
+          console.log(error.code, error.message); // DEBUG
+          switch(error.code) {
+            case "auth/invalid-email":
+            case "auth/user-not-found":
+              emailMsg.innerText = error.message;
+              break;
+            case "auth/wrong-password":
+              passwordMsg.innerText = error.message;
+              break;
+            default:
+              statusEl.innerText = error.message;
+          }
+        });
+    }
+
+    // Sign Out
+    window.signOut = () => {
+      clearMessages();
+      signOut(auth).then(() => {
+        statusEl.innerText = "👋 Signed out.";
+      });
+    }
+
+    // Auth state listener
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        statusEl.innerText = "🔒 Logged in as " + user.email;
+      } else {
+        statusEl.innerText = "Not logged in.";
+      }
+    });
+  </script>
+</body>
+</html>
